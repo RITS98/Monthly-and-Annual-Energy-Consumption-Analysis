@@ -151,7 +151,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><span class="header-section-number">1.1</span> Data Source</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RITS98/Monthly-and-Annual-Energy-Consumption-Analysis/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RITS98/Monthly-and-Annual-Energy-Consumption-Analysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -192,8 +195,18 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>The history of energy production can be traced back for thousands of years, and it serves as an important mark for the advancement in human culture, technology, and civilizations. Energy is not only crucial for our daily lives, but also serving for the foundation In recent decades, various sources for energy production have received attentions from scientists worldwide for different purposes. For a long time, fossil fuels have been the primary sources for energy, and yet the public have criticized its consequences on environmental harm and climate changes. In addition, due to the limited storage of fossil fuels on this planet, sustainable alternatives for coals and petroleum have been pushed to the to-do list. To this end, renewable sources, like hydro and solar power, have joined the stage. Other scientists have looked into fuels with higher energy density and starts to look for sites for nuclear power plants. All of those changes and development contributed to other changes in social, economic, and geopolitical changes which shaped our community.</p>
+<p>In this project, we aim to gain insights on the change in sources of energy consumption and production over the past several decades in United States. We are interested in understanding and visualizing trends, if any, in preferences for sources of energy generated or used, as well as any seasonal or periodic rise or fall in total production or consumption of energy. We expect, through such study, to learn more about the emphasis of various sources of energy and consumption have evolved over time and help us visualize the future.</p>
+<section id="data-source" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="data-source"><span class="header-section-number">1.1</span> Data Source</h2>
+<p>The source of data: https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector</p>
+<p>The data contains monthly data since January 1973 and annual data since 1949 on U.S. primary and total energy consumption by end-use sector (residential, commercial, industrial, transportation) and electric power sector.</p>
+<p>Each month, U.S. Energy Information Administration (EIA) produces publication detailing monthly energy consumption. The publication includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values.</p>
+<p>For this project, we have the compiled data till July 2024. This data will be used to perform data analysis and visualization.</p>
+<p>More granular data on each energy source can be found in the following link: https://www.eia.gov/totalenergy/data/browser/</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

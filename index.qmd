@@ -1,1 +1,20 @@
 # Introduction
+
+The history of energy production can be traced back for thousands of years, and it serves as an important mark for the advancement in human culture, technology, and civilizations. Energy is not only crucial for our daily lives, but also serving for the foundation In recent decades, various sources for energy production have received attentions from scientists worldwide for different purposes. For a long time, fossil fuels have been the primary sources for energy, and yet the public have criticized its consequences on environmental harm and climate changes. In addition, due to the limited storage of fossil fuels on this planet, sustainable alternatives for coals and petroleum have been pushed to the to-do list. To this end, renewable sources, like hydro and solar power, have joined the stage. Other scientists have looked into fuels with higher energy density and starts to look for sites for nuclear power plants. All of those changes and development contributed to other changes in social, economic, and geopolitical changes which shaped our community.
+
+In this project, we aim to gain insights on the change in sources of energy consumption and production over the past several decades in United States. We are interested in understanding and visualizing trends, if any, in preferences for sources of energy generated or used, as well as any seasonal or periodic rise or fall in total production or consumption of energy. We expect, through such study, to learn more about the emphasis of various sources of energy and consumption have evolved over time and help us visualize the future.
+
+## Data Source
+
+The source of data: https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector
+
+The data contains monthly data since January 1973 and annual data since 1949 on U.S. primary and total energy consumption by end-use sector (residential, commercial, industrial, transportation) and electric power sector. 
+
+Each month, U.S. Energy Information Administration (EIA) produces publication detailing monthly energy consumption. The publication includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values. 
+
+For this project, we have the compiled data till July 2024. This data will be used to perform data analysis and visualization. 
+
+More granular data on each energy source can be found in the following link: https://www.eia.gov/totalenergy/data/browser/
+
+
+
