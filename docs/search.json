@@ -24,7 +24,17 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "2.1 Description",
+    "text": "2.1 Technical Description\nDataset Name: Monthly and Annual Energy Consumption by Sector\nThis dataset includes monthly data for energy production and consumption by different sectors depending on the sources, the origins, and the usages since 1973, and annual data since 1949 for the United States. This dataset is collected and published by the US Energy Information Administration on a monthly basis, where the organization release preliminary data for the new month, often estimated, and revise previous numbers.\nFor this project, we will examine the monthly and annual table for the primary energy sources overview, both available at data.gov offered by the Department of Energy at https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector\nThe data is available both in csv files, xls files, and pdf ready to be processed.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
+    ]
+  },
+  {
+    "objectID": "data.html#import-libraries",
+    "href": "data.html#import-libraries",
+    "title": "2  Data",
+    "section": "2.2 Import Libraries",
+    "text": "2.2 Import Libraries\n\n\nCode\nlibrary(readxl)\nlibrary(naniar)\nlibrary(ggplot2)",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
@@ -33,8 +43,8 @@
     "objectID": "data.html#missing-value-analysis",
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis",
+    "section": "2.3 Missing value analysis",
+    "text": "2.3 Missing value analysis\n\n\nCode\nenergy_df &lt;- read_xlsx(path = \"data.xlsx\", sheet=1, skip=9)\nenergy_df &lt;- energy_df[-1, ]\nenergy_df[, -1] &lt;- lapply(energy_df[, -1], as.numeric)\nenergy_df[[1]] &lt;- as.Date(energy_df[[1]])\nenergy_df\n\n\n\n  \n\n\n\nThe original excel dataset contained metadata information like source, titles, etc. These metadata information is filtered out while importing the data into the R environment for easy data analysis.\nThe datatype of columns from column 2 to end is changed to numeric datatype. The datatype of column 1 is date.\nEach columns starting from Total Fossil Fuels Production shows energy production in Quadrillion Btu. 1 quad (short for quadrillion Btu) is 10^15 Btu, which is about 1 exajoule (1.055×10^18 J). Quads are used in the United States for representing the annual energy consumption of large economies: for example, the U.S. economy used 99.75 quads in 2005. One quad/year is about 33.43 gigawatts. (Source:British thermal unit)\n\n\nCode\nmissing_data_summary &lt;- data.frame(\n  Missing_Count = colSums(is.na(energy_df))\n)\n\nmissing_data_summary\n\n\n\n  \n\n\n\nThe dataset is summarized to get the amount of missing values in each column. As per the above table, there is no Null values in any of the columns of the dataset.\n\n\nCode\nvis_miss(energy_df) +\n  theme(\n    axis.text.x = element_text(angle = 270, hjust = 1),\n    axis.title = element_text(size = 10),\n    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkblue')\n  ) + \n  labs(\n    title = \"Percentage of datapoints missing in each column\",\n    x = \"Column Variables\",\n    y = \"Number of Observations\"\n  )\n\n\n\n\n\n\n\n\n\nThe above visualization shows each column variable has 0% missing data. There is no null or missing value in any of the columns of the dataset.\n\n\nCode\ngg_miss_var(energy_df) +\n  theme(\n    plot.title = element_text(hjust = 0.5, color = \"darkblue\", face = 'bold')\n  ) +\n  labs(\n    title = \"Missing Values by Column Variables\",\n    x = \"Column Variables\",\n    y = \"Number of Missing Values\"\n  )\n\n\n\n\n\n\n\n\n\nThe above visualization is a better representation of data missingness. The above datapoints are all present at 0 mark. It shows none of the columns in the dataset has missing value.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
