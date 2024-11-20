@@ -42,7 +42,7 @@ energy_df[[1]] <- as.Date(energy_df[[1]])
 energy_df
 ```
 
-The original excel dataset contained metadata information like source, titles, etc. These metadata information is filtered out while importing the data into the R environment for easy data analysis.
+The original excel dataset contained metadata information like source, titles, etc. The top 9 rows of the excel contains metadata information which distorts the structure of the data. These metadata information is filtered out while importing the data into the R environment for easy data analysis.
 
 The datatype of columns from column 2 to end is changed to numeric datatype. The datatype of column 1 is date.
 
