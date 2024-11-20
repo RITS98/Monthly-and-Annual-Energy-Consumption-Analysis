@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "Monthly and Annual Energy Consumption Analysis"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Ritayan Patra (rp3247)
+    - Zehao Jiang (zj2403)
+  repo-url: https://github.com/RITS98/Monthly-and-Annual-Energy-Consumption-Analysis
   date: today
   page-footer:
     right: |
