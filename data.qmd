@@ -20,23 +20,26 @@ Dataset Name: **Monthly and Annual Energy Consumption by Sector**
 
 This dataset includes monthly data for energy production and consumption
 by different sectors depending on the sources, the origins, and the
-usages since 1973, and annual data since 1949 for the United States.
-This dataset is collected and published by the US Energy Information
+usages since 1973, and annual data since 1949 for the United States.This
+dataset is collected and published by the US Energy Information
 Administration on a monthly basis, where the organization release
 preliminary data for the new month, often estimated, and revise previous
 numbers.
 
 For this project, we will examine the monthly and annual table for the
-primary energy sources overview, both available at data.gov offered by
-the Department of Energy at
+primary energy sources (like petroleum, coal, nuclear, renewable), both
+available at data.gov offered by the Department of Energy at
 <https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector>
 
 The data is available both in csv files, xls files, and pdf ready to be
-processed.
+processed. For this project, we have downloaded 19 excels files and did
+initial analysis on the missing data in each of this excel files. Then
+we have combined the data from all the excel files into a single excel
+file for easy processing and analysis of the data.
 
 ## Import Libraries
 
-```{r}
+```{r, warning=FALSE, echo=TRUE}
 invisible(library(readxl))
 invisible(library(naniar))
 invisible(library(ggplot2))
@@ -48,7 +51,7 @@ invisible(library(writexl))
 
 ## Missing value analysis
 
-### Loading the Monthly Energy Data
+### Energy Overview Data
 
 ```{r}
 energy_df_monthly <- read_xlsx(path = "./data_source/data/energy_overview_data.xlsx", sheet=1, skip=9)
@@ -56,6 +59,12 @@ energy_df_monthly <- energy_df_monthly[-1, ]
 energy_df_monthly[, -1] <- lapply(energy_df_monthly[, -1], as.numeric)
 energy_df_monthly[[1]] <- as.Date(energy_df_monthly[[1]])
 energy_df_monthly
+
+energy_df_annual <- read_xlsx(path='./data_source/data/energy_overview_data.xlsx', sheet=2, skip=9)
+energy_df_annual <- energy_df_annual[-1, ]
+energy_df_annual[, -1] <- lapply(energy_df_annual[, -1], as.numeric)
+colnames(energy_df_annual)[1] <- "Year"
+energy_df_annual
 ```
 
 The original excel dataset contained metadata information like source,
@@ -81,6 +90,12 @@ missing_data_summary <- data.frame(
 )
 
 missing_data_summary
+
+missing_data_summary <- data.frame(
+  Missing_Count = colSums(is.na(energy_df_annual))
+)
+
+missing_data_summary
 ```
 
 The dataset is summarized to get the amount of missing values in each
@@ -92,10 +107,26 @@ vis_miss(energy_df_monthly) +
   theme(
     axis.text.x = element_text(angle = 270, hjust = 1),
     axis.title = element_text(size = 10),
-    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkblue')
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkblue'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
   ) + 
   labs(
-    title = "Percentage of datapoints missing in each column (Monthly Energy Data)",
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Evergy Overview Data (Monthly)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Evergy Overview Data (Annually)",
     x = "Column Variables",
     y = "Number of Observations"
   )
@@ -107,64 +138,1128 @@ There is no null or missing value in any of the columns of the dataset.
 ```{r}
 gg_miss_var(energy_df_monthly) +
   theme(
-    plot.title = element_text(hjust = 0.5, color = "darkblue", face = 'bold')
+    plot.title = element_text(hjust = 0.5, color = "darkblue", face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
   ) +
   labs(
-    title = "Missing Values by Column Variables (Monthly Energy Data)",
+    title = "Missing Values by Column Variables",
+    subtitle = "Table: Evergy Overview Data (Monthly)",
+    x = "Column Variables",
+    y = "Number of Missing Values"
+  )
+
+gg_miss_var(energy_df_annual) +
+  theme(
+    plot.title = element_text(face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+  ) +
+  labs(
+    title = "Missing Values by Column Variables (Annual Energy Data)",
+    subtitle = "Table: Evergy Overview Data (Annually)",
     x = "Column Variables",
     y = "Number of Missing Values"
   )
 ```
 
-The above visualization is a better representation of data missingness.
+The above visualization is a another representation of data missingness.
 The above datapoints are all present at 0 mark. It shows none of the
 columns in the dataset has missing value.
 
-### Loading the Annual Energy Data
+### Primary Energy Production By Source Data
 
-```{r}
-energy_df_annual <- read_xlsx(path='./data_source/data/energy_overview_data.xlsx', sheet=2, skip=9)
-energy_df_annual <- energy_df_annual[-1, ]
-energy_df_annual[, -1] <- lapply(energy_df_annual[, -1], as.numeric)
-colnames(energy_df_annual)[1] <- "Year"
-energy_df_annual
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_pe_source <- read_xlsx(path = "./data_source/data/Table_1.2_Primary_Energy_Production_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_pe_source <- energy_df_monthly_pe_source[-1, ]
+energy_df_monthly_pe_source[, -1] <- lapply(energy_df_monthly_pe_source[, -1], as.numeric)
+energy_df_monthly_pe_source[[1]] <- as.Date(energy_df_monthly_pe_source[[1]])
+energy_df_monthly_pe_source
+
+energy_df_annual_pe_source <- read_xlsx(path = "./data_source/data/Table_1.2_Primary_Energy_Production_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_pe_source <- energy_df_annual_pe_source[-1, ]
+energy_df_annual_pe_source[, -1] <- lapply(energy_df_annual_pe_source[, -1], as.numeric)
+energy_df_annual_pe_source[[1]] <- as.Date(energy_df_annual_pe_source[[1]])
+energy_df_annual_pe_source
+
 ```
 
 ```{r}
-missing_data_summary <- data.frame(
-  Missing_Count = colSums(is.na(energy_df_annual))
-)
-
-missing_data_summary
-```
-
-```{r}
-vis_miss(energy_df_annual) + 
+vis_miss(energy_df_monthly_pe_source) + 
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
   ) +
   labs(
-    title = "Percentage of datapoints missing in each column (Annual Energy Data)",
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Production By Source (Monthly Data)",
+    x = "Column Variables",
+    y = "% of Observations"
+  )
+
+vis_miss(energy_df_annual_pe_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Production By Source (Annual Data)",
     x = "Column Variables",
     y = "Number of Observations"
   )
 ```
 
-```{r}
-gg_miss_var(energy_df_annual) +
+**Monthly Data** :
+
+-   "Solar Energy Production" has 21% of its data missing.
+
+-   "Wind Energy Production" has 19% of its data missing.
+
+-   Overall, 2.9% of the total data is missing, while 97.1% is present.
+
+**Annual Data** :
+
+-   Most columns have no missing data (0% missing), including “Annual
+    Total,” “Coal Production,” “Natural Gas (Dry) Production,” “Crude
+    Oil Production,” and others.
+
+-   “Geothermal Energy Production” has 15% of its data missing. - “Solar
+    Energy Production” has the highest percentage of missing data at
+    47%.
+
+-   “Wind Energy Production” also has a significant amount of missing
+    data at 45%.
+
+-   Overall, 7.6% of the total data is missing, while 92.4% is present.
+
+### Primary Energy Consumption By Source Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_pe_consumption_source <- read_xlsx(path = "./data_source/data/Table_1.3_Primary_Energy_Consumption_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_pe_consumption_source <- energy_df_monthly_pe_consumption_source[-1, ]
+energy_df_monthly_pe_consumption_source[, -1] <- lapply(energy_df_monthly_pe_consumption_source[, -1], as.numeric)
+energy_df_monthly_pe_consumption_source[[1]] <- as.Date(energy_df_monthly_pe_consumption_source[[1]])
+energy_df_monthly_pe_consumption_source
+
+energy_df_annual_pe_consumption_source <- read_xlsx(path = "./data_source/data/Table_1.3_Primary_Energy_Consumption_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_pe_consumption_source <- energy_df_annual_pe_consumption_source[-1, ]
+energy_df_annual_pe_consumption_source[, -1] <- lapply(energy_df_annual_pe_consumption_source[, -1], as.numeric)
+energy_df_annual_pe_consumption_source[[1]] <- as.Date(energy_df_annual_pe_consumption_source[[1]])
+energy_df_annual_pe_consumption_source
+```
+
+```{r, fig.width=15, fig.height=8, scroll=TRUE}
+vis_miss(energy_df_monthly_pe_consumption_source) + 
   theme(
-    plot.title = element_text(face='bold', color='darkblue')
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
   ) +
   labs(
-    title = "Missing Values by Column Variables (Annual Energy Data)",
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Consumption By Source (Monthly Data)",
     x = "Column Variables",
-    y = "Number of Missing Values"
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_pe_consumption_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Consumption By Source (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
   )
 ```
 
+**Monthly Data** :
 
+-   Wind Energy Consumption has the highest percentage of missing data
+    points at 19%. This suggests that wind energy consumption data may
+    be less reliable or less frequently collected compared to other
+    energy sources.
+
+-   Solar Energy Consumption also has a high percentage of missing data
+    points at 21%. This could be due to similar reasons as wind energy,
+    or potentially due to the more recent and rapid growth of solar
+    energy compared to other sources.
+
+**Annual Data** :
+
+-   The column with the highest percentage of missing data points is
+    "Wind Energy Consumption," with 45% of its data missing. This is
+    followed by "Solar Energy Consumption" with 47% missing data.
+
+-   Most columns have no missing data points. These include columns like
+    "Consumption," "Total Renewable Energy Consumption," and "Total
+    Fossil Fuels Consumption."
+
+-   The dataset has a total of 100 observations.
+
+### Primary Energy Imports Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_pe_imports_source <- read_xlsx(path = "./data_source/data/Table_1.4a_Primary_Energy_Imports_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_pe_imports_source <- energy_df_monthly_pe_imports_source[-1, ]
+energy_df_monthly_pe_imports_source[, -1] <- lapply(energy_df_monthly_pe_imports_source[, -1], as.numeric)
+energy_df_monthly_pe_imports_source[[1]] <- as.Date(energy_df_monthly_pe_imports_source[[1]])
+energy_df_monthly_pe_imports_source
+
+energy_df_annual_pe_imports_source <- read_xlsx(path = "./data_source/data/Table_1.4a_Primary_Energy_Imports_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_pe_imports_source <- energy_df_annual_pe_imports_source[-1, ]
+energy_df_annual_pe_imports_source[, -1] <- lapply(energy_df_annual_pe_imports_source[, -1], as.numeric)
+energy_df_annual_pe_imports_source[[1]] <- as.Date(energy_df_annual_pe_imports_source[[1]])
+energy_df_annual_pe_imports_source
+```
+
+```{r, fig.height= 10}
+vis_miss(energy_df_monthly_pe_imports_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Imports By Source (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_pe_imports_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Imports By Source (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The "Biomass Imports" columns stand out with around 30% missing
+    data.
+
+**Annual Data**:
+
+-   The column with the highest percentage of missing data is "Biomass
+    Imports" with 50% of its data points missing.
+
+### Primary Energy Export Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_pe_exports_source <- read_xlsx(path = "./data_source/data/Table_1.4b_Primary_Energy_Exports_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_pe_exports_source <- energy_df_monthly_pe_exports_source[-1, ]
+energy_df_monthly_pe_exports_source[, -1] <- lapply(energy_df_monthly_pe_exports_source[, -1], as.numeric)
+energy_df_monthly_pe_exports_source[[1]] <- as.Date(energy_df_monthly_pe_exports_source[[1]])
+energy_df_monthly_pe_exports_source
+
+energy_df_annual_pe_exports_source <- read_xlsx(path = "./data_source/data/Table_1.4b_Primary_Energy_Exports_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_pe_exports_source <- energy_df_annual_pe_exports_source[-1, ]
+energy_df_annual_pe_exports_source[, -1] <- lapply(energy_df_annual_pe_exports_source[, -1], as.numeric)
+energy_df_annual_pe_exports_source[[1]] <- as.Date(energy_df_annual_pe_exports_source[[1]])
+energy_df_annual_pe_exports_source
+```
+
+```{r, fig.width=15, fig.height=5}
+vis_miss(energy_df_monthly_pe_exports_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Exports By Source (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_pe_exports_source) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Primary Energy Exports By Source (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   Approximately 5.4% of data points are missing across all columns.
+    This means that out of all the data points in the dataset, 5.4% are
+    not available.
+
+-   The majority of columns have zero levels of missing data (0%). This
+    indicates that for most variables, the data is mostly complete.
+    There is one column, "Biomass Exports," with a significantly higher
+    proportion of missing data (54%). This suggests that this particular
+    variable has the most incomplete data within the dataset.
+
+**Annual Data**:
+
+-   Approximately 8.9% of data points are missing across all columns.
+    This means that out of all the data points in the dataset, 8.9% are
+    not available.
+
+-   The majority of columns have zero levels of missing data (0%). This
+    indicates that for most variables, the data is mostly complete.
+    There is one column, "Electricity Exports," with a significantly
+    higher proportion of missing data (69%). This suggests that this
+    particular variable has the most incomplete data within the dataset.
+
+### Energy Consumption by Residentaial, Commercial and Industrial Sectors Data
+
+```{r}
+energy_df_monthly_consumption_sector_1 <- read_xlsx(path = "./data_source/data/Table_2.1a_Energy_Consumption_Residential_Commercial_Industrial_Sectors.xlsx", sheet=1, skip=9)
+energy_df_monthly_consumption_sector_1 <- energy_df_monthly_consumption_sector_1[-1, ]
+energy_df_monthly_consumption_sector_1[, -1] <- lapply(energy_df_monthly_consumption_sector_1[, -1], as.numeric)
+energy_df_monthly_consumption_sector_1[[1]] <- as.Date(energy_df_monthly_consumption_sector_1[[1]])
+energy_df_monthly_consumption_sector_1
+
+energy_df_annual_consumption_sector_1 <- read_xlsx(path = "./data_source/data/Table_2.1a_Energy_Consumption_Residential_Commercial_Industrial_Sectors.xlsx", sheet=2, skip=9)
+energy_df_annual_consumption_sector_1 <- energy_df_annual_consumption_sector_1[-1, ]
+energy_df_annual_consumption_sector_1[, -1] <- lapply(energy_df_annual_consumption_sector_1[, -1], as.numeric)
+energy_df_annual_consumption_sector_1[[1]] <- as.Date(energy_df_annual_consumption_sector_1[[1]])
+energy_df_annual_consumption_sector_1
+```
+
+```{r, fig.width=15, fig.height=10}
+vis_miss(energy_df_monthly_consumption_sector_1) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Energy Consumption By Residential,Commercial and Industrial Sectors (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_consumption_sector_1) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Energy Consumption By Residential,Commercial and Industrial Sectors (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+Both of the charts show that all columns in the table have 0% missing
+datapoints. This means that there are no missing values in any of the
+columns. Having no missing data is generally good because it allows for
+more accurate and reliable analysis. It means that all the data points
+are present and can be used for calculations and modeling without any
+gaps.
+
+### Energy Consumption By Transportaion, End and Electric Power Sectors Data
+
+```{r}
+energy_df_monthly_consumption_sector_2 <- read_xlsx(path = "./data_source/data/Table_2.1b_Energy_Consumption_Transportation_Sector_Total_End-Use_Sectors_Electric_Power_Sector.xlsx", sheet=1, skip=9)
+energy_df_monthly_consumption_sector_2 <- energy_df_monthly_consumption_sector_2[-1, ]
+energy_df_monthly_consumption_sector_2[, -1] <- lapply(energy_df_monthly_consumption_sector_2[, -1], as.numeric)
+energy_df_monthly_consumption_sector_2[[1]] <- as.Date(energy_df_monthly_consumption_sector_2[[1]])
+energy_df_monthly_consumption_sector_2
+
+energy_df_annual_consumption_sector_2 <- read_xlsx(path = "./data_source/data/Table_2.1b_Energy_Consumption_Transportation_Sector_Total_End-Use_Sectors_Electric_Power_Sector.xlsx", sheet=2, skip=9)
+energy_df_annual_consumption_sector_2 <- energy_df_annual_consumption_sector_2[-1, ]
+energy_df_annual_consumption_sector_2[, -1] <- lapply(energy_df_annual_consumption_sector_2[, -1], as.numeric)
+energy_df_annual_consumption_sector_2[[1]] <- as.Date(energy_df_annual_consumption_sector_2[[1]])
+energy_df_annual_consumption_sector_2
+```
+
+```{r, fig.width=15, fig.height=10, scroll=TRUE}
+vis_miss(energy_df_monthly_consumption_sector_1) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Energy Consumption By Transportation, Total End Use and Electric Power Sector (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_consumption_sector_1) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Energy Consumption By Transportation, Total End Use and Electric Power Sector (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+Both of the charts show that all columns in the table have 0% missing
+datapoints. This means that there are no missing values in any of the
+columns. Having no missing data is generally good because it allows for
+more accurate and reliable analysis. It means that all the data points
+are present and can be used for calculations and modeling without any
+gaps.
+
+### Petroleum Data Overview
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_petroleum <- read_xlsx(path = "./data_source/data/Table_3.1_Petroleum_Overview.xlsx", sheet=1, skip=9)
+energy_df_monthly_petroleum <- energy_df_monthly_petroleum[-1, ]
+energy_df_monthly_petroleum[, -1] <- lapply(energy_df_monthly_petroleum[, -1], as.numeric)
+energy_df_monthly_petroleum[[1]] <- as.Date(energy_df_monthly_petroleum[[1]])
+energy_df_monthly_petroleum
+
+energy_df_annual_petroleum <- read_xlsx(path = "./data_source/data/Table_3.1_Petroleum_Overview.xlsx", sheet=2, skip=9)
+energy_df_annual_petroleum <- energy_df_annual_petroleum[-1, ]
+energy_df_annual_petroleum[, -1] <- lapply(energy_df_annual_petroleum[, -1], as.numeric)
+energy_df_annual_petroleum[[1]] <- as.Date(energy_df_annual_petroleum[[1]])
+energy_df_annual_petroleum
+```
+
+```{r, fig.width=15, fig.height=10}
+vis_miss(energy_df_monthly_petroleum) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Overview Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_petroleum) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum OVerview Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+"Biofuels Plant Net Production" has the highest percentage of missing
+data points. There are 69% and 80% of data missing in each of the
+monthly and annual dataset.
+
+### Petroleum Consumption By Residentail and Commercial Sectors Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_petroleum_consumption_res_comm <- read_xlsx(path = "./data_source/data/Table_3.7a_Petroleum_Consumption_Residential_and_Commercial_Sectors.xlsx", sheet=1, skip=9)
+energy_df_monthly_petroleum_consumption_res_comm <- energy_df_monthly_petroleum_consumption_res_comm[-1, ]
+energy_df_monthly_petroleum_consumption_res_comm[, -1] <- lapply(energy_df_monthly_petroleum_consumption_res_comm[, -1], as.numeric)
+energy_df_monthly_petroleum_consumption_res_comm[[1]] <- as.Date(energy_df_monthly_petroleum_consumption_res_comm[[1]])
+energy_df_monthly_petroleum_consumption_res_comm
+
+energy_df_annual_petroleum_consumption_res_comm <- read_xlsx(path = "./data_source/data/Table_3.7a_Petroleum_Consumption_Residential_and_Commercial_Sectors.xlsx", sheet=2, skip=9)
+energy_df_annual_petroleum_consumption_res_comm <- energy_df_annual_petroleum_consumption_res_comm[-1, ]
+energy_df_annual_petroleum_consumption_res_comm[, -1] <- lapply(energy_df_annual_petroleum_consumption_res_comm[, -1], as.numeric)
+energy_df_annual_petroleum_consumption_res_comm[[1]] <- as.Date(energy_df_annual_petroleum_consumption_res_comm[[1]])
+energy_df_annual_petroleum_consumption_res_comm
+```
+
+```{r, fig.width=15, fig.height=10}
+vis_miss(energy_df_monthly_petroleum_consumption_res_comm) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Residential and Commercial Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_petroleum_consumption_res_comm) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Residential and Commercial Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The chart highlights that the majority of the data points in the
+    dataset are present, with only one column ("Petroleum Coke Consumed
+    by the Commercial Sector") having a significant amount of missing
+    data (31%).
+
+**Annual Data**:
+
+-   The chart highlights that the majority of the data points in the
+    dataset are present, with only one column ("Petroleum Coke Consumed
+    by the Commercial Sector") having a significant amount of missing
+    data (53%).
+
+### Petroleum Consumption by Industrial Sector Data
+
+```{r}
+energy_df_monthly_petroleum_consumption_indus <- read_xlsx(path = "./data_source/data/Table_3.7b_Petroleum_Consumption_Industrial_Sector.xlsx", sheet=1, skip=9)
+energy_df_monthly_petroleum_consumption_indus <- energy_df_monthly_petroleum_consumption_indus[-1, ]
+energy_df_monthly_petroleum_consumption_indus[, -1] <- lapply(energy_df_monthly_petroleum_consumption_indus[, -1], as.numeric)
+energy_df_monthly_petroleum_consumption_indus[[1]] <- as.Date(energy_df_monthly_petroleum_consumption_indus[[1]])
+energy_df_monthly_petroleum_consumption_indus
+
+energy_df_annual_petroleum_consumption_indus <- read_xlsx(path = "./data_source/data/Table_3.7b_Petroleum_Consumption_Industrial_Sector.xlsx", sheet=2, skip=9)
+energy_df_annual_petroleum_consumption_indus <- energy_df_annual_petroleum_consumption_indus[-1, ]
+energy_df_annual_petroleum_consumption_indus[, -1] <- lapply(energy_df_annual_petroleum_consumption_indus[, -1], as.numeric)
+energy_df_annual_petroleum_consumption_indus[[1]] <- as.Date(energy_df_annual_petroleum_consumption_indus[[1]])
+energy_df_annual_petroleum_consumption_indus
+```
+
+```{r, fig.width=15, fig.height=10}
+vis_miss(energy_df_monthly_petroleum_consumption_indus) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Industrial Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_petroleum_consumption_indus) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Industrial Sector Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+There is no missing data in any of the dataset as per these graphs. The
+dataset is complete.
+
+### Petroleum Consumption By Transportation and Electric Power Sector Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_petroleum_consumption_trans <- read_xlsx(path = "./data_source/data/Table_3.7c_Petroleum_Consumption_Transportation_and_Electric_Power_Sectors.xlsx", sheet=1, skip=9)
+energy_df_monthly_petroleum_consumption_trans <- energy_df_monthly_petroleum_consumption_trans[-1, ]
+energy_df_monthly_petroleum_consumption_trans[, -1] <- lapply(energy_df_monthly_petroleum_consumption_trans[, -1], as.numeric)
+energy_df_monthly_petroleum_consumption_trans[[1]] <- as.Date(energy_df_monthly_petroleum_consumption_trans[[1]])
+energy_df_monthly_petroleum_consumption_trans
+
+energy_df_annual_petroleum_consumption_trans <- read_xlsx(path = "./data_source/data/Table_3.7c_Petroleum_Consumption_Transportation_and_Electric_Power_Sectors.xlsx", sheet=2, skip=9)
+energy_df_annual_petroleum_consumption_trans <- energy_df_annual_petroleum_consumption_trans[-1, ]
+energy_df_annual_petroleum_consumption_trans[, -1] <- lapply(energy_df_annual_petroleum_consumption_trans[, -1], as.numeric)
+energy_df_annual_petroleum_consumption_trans[[1]] <- as.Date(energy_df_annual_petroleum_consumption_trans[[1]])
+energy_df_annual_petroleum_consumption_trans
+```
+
+```{r, fig.width=15, fig.height=10}
+vis_miss(energy_df_monthly_petroleum_consumption_trans) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Transportation and Electric Power Sector Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_petroleum_consumption_trans) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Petroleum Consumption By Transportation and Electric Power Sector Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   High Percentage of Missing Data in "Other Products Consumed by the
+    Transportation Sector". This column has the highest percentage of
+    missing data points, with 93% of the data missing. This could be due
+    to various reasons, such as data collection limitations or the
+    nature of the data itself.
+
+**Annual Data**:
+
+A few columns stand out with higher percentages of missing data. These
+include:
+
+-   "Petroleum Coke Consumed by the Electric Power Sector" (28% missing)
+
+-   "Other Products Consumed by the Transportation Sector" (96% missing)
+
+-   "Jet Fuel Consumed by the Transportation Sector" (4% missing)
+
+### Natural Gas Data Overview
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_natural_gas <- read_xlsx(path = "./data_source/data/Table_4.1_Natural_Gas_Overview.xlsx", sheet=1, skip=9)
+energy_df_monthly_natural_gas <- energy_df_monthly_natural_gas[-1, ]
+energy_df_monthly_natural_gas[, -1] <- lapply(energy_df_monthly_natural_gas[, -1], as.numeric)
+energy_df_monthly_natural_gas[[1]] <- as.Date(energy_df_monthly_natural_gas[[1]])
+energy_df_monthly_natural_gas
+
+energy_df_annual_natural_gas <- read_xlsx(path = "./data_source/data/Table_4.1_Natural_Gas_Overview.xlsx", sheet=2, skip=9)
+energy_df_annual_natural_gas <- energy_df_annual_natural_gas[-1, ]
+energy_df_annual_natural_gas[, -1] <- lapply(energy_df_annual_natural_gas[, -1], as.numeric)
+energy_df_annual_natural_gas[[1]] <- as.Date(energy_df_annual_natural_gas[[1]])
+energy_df_annual_natural_gas
+```
+
+```{r, fig.width=15, fig.height=10, scroll=TRUE}
+vis_miss(energy_df_monthly_natural_gas) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Natural Gas Overview Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_natural_gas) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Natural Gas Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   In the monthly data, there are 3 columns with missing data as per
+    the graph. The missing percentage is 14%, 14% and 5% respectively.
+
+**Annual Data**:
+
+-   Most columns have no missing data: The majority of the columns have
+    0% missing data, represented by the full gray bars. Supplemental
+    Gaseous Fuels has the highest missing data has 41% missing data,
+    represented by the tall black bar. All other columns have 0% missing
+    data: The remaining columns have no missing data.
+
+### Natural Gas Consumption By Sector Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_natural_gas_consumption <- read_xlsx(path = "./data_source/data/Table_4.3_Natural_Gas_Consumption_by_Sector.xlsx", sheet=1, skip=9)
+energy_df_monthly_natural_gas_consumption <- energy_df_monthly_natural_gas_consumption[-1, ]
+energy_df_monthly_natural_gas_consumption[, -1] <- lapply(energy_df_monthly_natural_gas_consumption[, -1], as.numeric)
+energy_df_monthly_natural_gas_consumption[[1]] <- as.Date(energy_df_monthly_natural_gas_consumption[[1]])
+energy_df_monthly_natural_gas_consumption
+
+energy_df_annual_natural_gas_consumption <- read_xlsx(path = "./data_source/data/Table_4.3_Natural_Gas_Consumption_by_Sector.xlsx", sheet=2, skip=9)
+energy_df_annual_natural_gas_consumption <- energy_df_annual_natural_gas_consumption[-1, ]
+energy_df_annual_natural_gas_consumption[, -1] <- lapply(energy_df_annual_natural_gas_consumption[, -1], as.numeric)
+energy_df_annual_natural_gas_consumption[[1]] <- as.Date(energy_df_annual_natural_gas_consumption[[1]])
+energy_df_annual_natural_gas_consumption
+```
+
+```{r, fig.width=15, fig.height=8}
+vis_miss(energy_df_monthly_natural_gas_consumption) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Natural Gas Consumption By Sector Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_natural_gas_consumption) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Natural Gas Consumption By Sector Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The dataset has a total of 600 observations. There is a small
+    percentage of missing data across the columns.
+
+-   The dataset has a relatively high percentage of missing data in two
+    specific columns: "Natural Gas Consumed by the Transportation
+    Sector, Vehicle Fuel" and "Natural Gas Consumed by the Other
+    Industrial Sector, CHP."
+
+**Annual Data**:
+
+-   The dataset has a total of 15 columns. 8.5% of the data points
+    across all columns are missing. 91.5% of the data points are
+    present.
+
+-   Most columns have no missing data (0%). The column "Natural Gas
+    Consumed by the Transportation Sector, Vehicle Fuel" has the highest
+    percentage of missing data, with 55% of its values missing. The
+    column "Natural Gas Consumed by the Other Industrial Sector, CHP"
+    has 53% of its values missing.
+
+### Coal Data Overview
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_coal <- read_xlsx(path = "./data_source/data/Table_6.1_Coal_Overview.xlsx", sheet=1, skip=9)
+energy_df_monthly_coal <- energy_df_monthly_coal[-1, ]
+energy_df_monthly_coal[, -1] <- lapply(energy_df_monthly_coal[, -1], as.numeric)
+energy_df_monthly_coal[[1]] <- as.Date(energy_df_monthly_coal[[1]])
+energy_df_monthly_coal
+
+energy_df_annual_coal <- read_xlsx(path = "./data_source/data/Table_6.1_Coal_Overview.xlsx", sheet=2, skip=9)
+energy_df_annual_coal <- energy_df_annual_coal[-1, ]
+energy_df_annual_coal[, -1] <- lapply(energy_df_annual_coal[, -1], as.numeric)
+energy_df_annual_coal[[1]] <- as.Date(energy_df_annual_coal[[1]])
+energy_df_annual_coal
+```
+
+```{r, fig.width=15, fig.height=8}
+vis_miss(energy_df_monthly_coal) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Overview Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_coal) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Overview Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+The dataset has a relatively high percentage of missing data in one
+specific column: "Waste Coal Supplied" in both the charts.
+
+### Coal Consumption By Sectors Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_coal_cons <- read_xlsx(path = "./data_source/data/Table_6.2_Coal_Consumption_by_Sector.xlsx", sheet=1, skip=9)
+energy_df_monthly_coal_cons <- energy_df_monthly_coal_cons[-1, ]
+energy_df_monthly_coal_cons[, -1] <- lapply(energy_df_monthly_coal_cons[, -1], as.numeric)
+energy_df_monthly_coal_cons[[1]] <- as.Date(energy_df_monthly_coal_cons[[1]])
+energy_df_monthly_coal_cons
+
+energy_df_annual_coal_cons <- read_xlsx(path = "./data_source/data/Table_6.2_Coal_Consumption_by_Sector.xlsx", sheet=2, skip=9)
+energy_df_annual_coal_cons <- energy_df_annual_coal_cons[-1, ]
+energy_df_annual_coal_cons[, -1] <- lapply(energy_df_annual_coal_cons[, -1], as.numeric)
+energy_df_annual_coal_cons[[1]] <- as.Date(energy_df_annual_coal_cons[[1]])
+energy_df_annual_coal_cons
+```
+
+```{r, fig.width=15, fig.height=8}
+vis_miss(energy_df_monthly_coal_cons) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Consumption By Sector Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_coal_cons) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Consumption By Sector  Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The dataset has 7.2% of data points missing across all columns. The
+    most missing data is in the "Coal Consumed by the Residential
+    Sector" column (32%), followed by "Coal Consumed by the Commercial
+    Sector, CHP" and "Coal Consumed by the Other Industrial Sector, CHP"
+    (both at 31%).
+
+**Annual Data**:
+
+-   The dataset has 9.8% of data points missing across all columns. The
+    most missing data is in the "Coal Consumed by the Residential
+    Sector" column (21%), followed by "Coal Consumed by the Commercial
+    Sector, CHP" and "Coal Consumed by the Other Industrial Sector, CHP"
+    (both at 53%).
+
+### Nuclear Energy Data Overview
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_nuclear <- read_xlsx(path = "./data_source/data/Table_8.1_Nuclear_Energy_Overview.xlsx", sheet=1, skip=9)
+energy_df_monthly_nuclear <- energy_df_monthly_nuclear[-1, ]
+energy_df_monthly_nuclear[, -1] <- lapply(energy_df_monthly_nuclear[, -1], as.numeric)
+energy_df_monthly_nuclear[[1]] <- as.Date(energy_df_monthly_nuclear[[1]])
+energy_df_monthly_nuclear
+
+energy_df_annual_nuclear <- read_xlsx(path = "./data_source/data/Table_8.1_Nuclear_Energy_Overview.xlsx", sheet=2, skip=9)
+energy_df_annual_nuclear <- energy_df_annual_nuclear[-1, ]
+energy_df_annual_nuclear[, -1] <- lapply(energy_df_annual_nuclear[, -1], as.numeric)
+energy_df_annual_nuclear[[1]] <- as.Date(energy_df_annual_nuclear[[1]])
+energy_df_annual_nuclear
+```
+
+```{r, fig.width=15, fig.height=8, scroll=TRUE}
+vis_miss(energy_df_monthly_nuclear) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Consumption By Sector Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_nuclear) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Coal Consumption By Sector  Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   Nuclear Generating Units, Total Operable Units: This column has the
+    highest percentage of missing data points, with 39% of its values
+    missing.
+
+**Annual Data**:
+
+-   Nuclear Generating Units, Capacity Factor (24%): This column has 24%
+    of its data points missing.
+
+### Average Electricity Price Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_price <- read_xlsx(path = "./data_source/data/Table_9.8_Average_Prices_of_Electricity.xlsx", sheet=1, skip=9)
+energy_df_monthly_price <- energy_df_monthly_price[-1, ]
+energy_df_monthly_price[, -1] <- lapply(energy_df_monthly_price[, -1], as.numeric)
+energy_df_monthly_price[[1]] <- as.Date(energy_df_monthly_price[[1]])
+energy_df_monthly_price
+
+energy_df_annual_price <- read_xlsx(path = "./data_source/data/Table_9.8_Average_Prices_of_Electricity.xlsx", sheet=2, skip=9)
+energy_df_annual_price <- energy_df_annual_price[-1, ]
+energy_df_annual_price[, -1] <- lapply(energy_df_annual_price[, -1], as.numeric)
+energy_df_annual_price[[1]] <- as.Date(energy_df_annual_price[[1]])
+energy_df_annual_price
+```
+
+```{r, fig.width=15, fig.height=8}
+vis_miss(energy_df_monthly_price) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Avergar Electricity Price Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_price) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Average Electricity Price Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The majority of the columns have some missing data, with the
+    exception of the "Month" column.
+
+-   The column "Average Price of Electricity to Ultimate Customers,
+    Other" has the highest percentage of missing data (73%).
+
+-   The columns "Average Price of Electricity to Ultimate Customers,
+    Transportation" and "Average Price of Electricity to Ultimate
+    Customers, Residential," "Average Price of Electricity to Ultimate
+    Customers, Commercial," and "Average Price of Electricity to
+    Ultimate Customers, Industrial" have 50%, 13%, 13%, and 13% missing
+    data, respectively.
+
+**Annual Data**:
+
+-   The column "Average Price of Electricity to Ultimate Customers,
+    Transportation" has the highest percentage of missing data (67%).
+
+-   The column "Average Price of Electricity to Ultimate Customers,
+    Other" has 33% missing data.
+
+### Renewable Energy Production and Consumption by Sectors Data
+
+```{r, warning=FALSE, echo=TRUE}
+energy_df_monthly_renewable <- read_xlsx(path = "./data_source/data/Table_10.1_Renewable_Energy_Production_and_Consumption_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_renewable <- energy_df_monthly_renewable[-1, ]
+energy_df_monthly_renewable[, -1] <- lapply(energy_df_monthly_renewable[, -1], as.numeric)
+energy_df_monthly_renewable[[1]] <- as.Date(energy_df_monthly_renewable[[1]])
+energy_df_monthly_renewable
+
+energy_df_annual_renewable <- read_xlsx(path = "./data_source/data/Table_10.1_Renewable_Energy_Production_and_Consumption_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_renewable <- energy_df_annual_renewable[-1, ]
+energy_df_annual_renewable[, -1] <- lapply(energy_df_annual_renewable[, -1], as.numeric)
+energy_df_annual_renewable[[1]] <- as.Date(energy_df_annual_renewable[[1]])
+energy_df_annual_renewable
+```
+
+```{r, fig.width=15, fig.height=8}
+vis_miss(energy_df_monthly_renewable) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Renewable Energy Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_renewable) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: Renewable Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+**Monthly Data**:
+
+-   The majority of the columns have no missing data.
+
+-   The column "Solar Energy Consumption" has the highest percentage of
+    missing data (21%).
+
+-   The column "Wind Energy Consumption" has 19% missing data.
+
+-   The columns "Total Biofuels Consumption" and "Total Biofuels
+    Production" have 15% missing data.
+
+**Annual Data**:
+
+-   The majority of the columns have no missing data.
+
+-   The column "Solar Energy Consumption" has the highest percentage of
+    missing data (47%).
+
+-   The column "Wind Energy Consumption" has 45% missing data.
+
+-   The column "Waste Energy Consumption" has 28% missing data.
+
+-   Other columns like "Biofuels Production", "Biofuels Consumption" and
+    "Geothermal Energy Consumption" has certain percentage of missing
+    data.
+
+### CO2 Emissions Data
+
+```{r}
+energy_df_monthly_co2 <- read_xlsx(path = "./data_source/data/Table_11.1_Carbon_Dioxide_Emissions_From_Energy_Consumption_by_Source.xlsx", sheet=1, skip=9)
+energy_df_monthly_co2 <- energy_df_monthly_co2[-1, ]
+energy_df_monthly_co2[, -1] <- lapply(energy_df_monthly_co2[, -1], as.numeric)
+energy_df_monthly_co2[[1]] <- as.Date(energy_df_monthly_co2[[1]])
+energy_df_monthly_co2
+
+energy_df_annual_co2 <- read_xlsx(path = "./data_source/data/Table_11.1_Carbon_Dioxide_Emissions_From_Energy_Consumption_by_Source.xlsx", sheet=2, skip=9)
+energy_df_annual_co2 <- energy_df_annual_co2[-1, ]
+energy_df_annual_co2[, -1] <- lapply(energy_df_annual_co2[, -1], as.numeric)
+energy_df_annual_co2[[1]] <- as.Date(energy_df_annual_co2[[1]])
+energy_df_annual_co2
+```
+
+```{r, fig.width=15, fig.height=8, scroll=TRUE}
+vis_miss(energy_df_monthly_co2) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: CO2 Emission Data (Monthly Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+
+vis_miss(energy_df_annual_co2) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column",
+    subtitle = "Table: CO2 Emission Data (Annual Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+There is no missing data in any of the dataset as per the graph.
+
+## Combining Data
+
+Managing 19 separate Excel files for data analysis can be a challenging
+and time-consuming process, as it requires handling multiple file
+operations, ensuring consistency across datasets, and potentially
+dealing with overlapping or missing data. A more efficient approach is
+to consolidate all the data into a single table structure. By doing so,
+we eliminate the need for complex and computationally expensive join
+operations, simplify the workflow, and significantly reduce the amount
+of code required to process and analyze the data. This approach not only
+streamlines the data analysis process but also minimizes errors and
+improves overall efficiency.
+
+### Merging the monthly data
 
 ```{r, warning=FALSE, echo=TRUE}
 folder_path <- './data_source/data'
@@ -189,7 +1284,7 @@ write_xlsx(combined_data, path='./data_source/combined_monthly_data.xlsx')
 
 ```
 
-
+### Merging the annual data
 
 ```{r, warning=FALSE, echo=TRUE}
 folder_path <- './data_source/data'
@@ -212,6 +1307,4 @@ data_list <- lapply(file_list, read_file_skip_rows)
 combined_data <- Reduce(function(x, y) merge(x, y, by='Year', all=TRUE), data_list)
 
 write_xlsx(combined_data, path='./data_source/combined_annual_data.xlsx')
-
 ```
-
