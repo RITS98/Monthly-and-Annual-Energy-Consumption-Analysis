@@ -43,6 +43,7 @@ invisible(library(ggplot2))
 invisible(library(dplyr))
 invisible(library(tidyr))
 invisible(library(stringr))
+invisible(library(writexl))
 ```
 
 ## Missing value analysis
@@ -50,7 +51,7 @@ invisible(library(stringr))
 ### Loading the Monthly Energy Data
 
 ```{r}
-energy_df_monthly <- read_xlsx(path = "data.xlsx", sheet=1, skip=9)
+energy_df_monthly <- read_xlsx(path = "./data_source/data/energy_overview_data.xlsx", sheet=1, skip=9)
 energy_df_monthly <- energy_df_monthly[-1, ]
 energy_df_monthly[, -1] <- lapply(energy_df_monthly[, -1], as.numeric)
 energy_df_monthly[[1]] <- as.Date(energy_df_monthly[[1]])
@@ -119,10 +120,10 @@ The above visualization is a better representation of data missingness.
 The above datapoints are all present at 0 mark. It shows none of the
 columns in the dataset has missing value.
 
-### 3.2. Loading the Annual Energy Data
+### Loading the Annual Energy Data
 
 ```{r}
-energy_df_annual <- read_xlsx(path='data.xlsx', sheet=2, skip=9)
+energy_df_annual <- read_xlsx(path='./data_source/data/energy_overview_data.xlsx', sheet=2, skip=9)
 energy_df_annual <- energy_df_annual[-1, ]
 energy_df_annual[, -1] <- lapply(energy_df_annual[, -1], as.numeric)
 colnames(energy_df_annual)[1] <- "Year"
@@ -162,3 +163,55 @@ gg_miss_var(energy_df_annual) +
     y = "Number of Missing Values"
   )
 ```
+
+
+
+```{r, warning=FALSE, echo=TRUE}
+folder_path <- './data_source/data'
+
+file_list <- list.files(path = folder_path, pattern = '\\.xlsx$', full.names =TRUE)
+
+read_file_skip_rows <- function(file_path){
+  df <- read_xlsx(file_path, sheet=1, skip=9)
+  new_colnames <- c(names(df)[1], paste(names(df)[-1], as.character(df[1, -1]), sep = " "))
+  colnames(df) <- new_colnames
+  df <- df[-1, ]
+  df[, -1] <- lapply(df[, -1], as.numeric)
+  df[[1]] <- as.Date(df[[1]])
+  return (df)
+}
+
+data_list <- lapply(file_list, read_file_skip_rows)
+
+combined_data <- Reduce(function(x, y) merge(x, y, by='Month', all=TRUE), data_list)
+
+write_xlsx(combined_data, path='./data_source/combined_monthly_data.xlsx')
+
+```
+
+
+
+```{r, warning=FALSE, echo=TRUE}
+folder_path <- './data_source/data'
+
+file_list <- list.files(path = folder_path, pattern = '\\.xlsx$', full.names =TRUE)
+
+read_file_skip_rows <- function(file_path){
+  df <- read_xlsx(file_path, sheet=1, skip=9)
+  new_colnames <- c(names(df)[1], paste(names(df)[-1], as.character(df[1, -1]), sep = " "))
+  colnames(df) <- new_colnames
+  colnames(df)[1] <- 'Year'
+  df <- df[-1, ]
+  df[, -1] <- lapply(df[, -1], as.numeric)
+  df[[1]] <- as.Date(df[[1]])
+  return (df)
+}
+
+data_list <- lapply(file_list, read_file_skip_rows)
+
+combined_data <- Reduce(function(x, y) merge(x, y, by='Year', all=TRUE), data_list)
+
+write_xlsx(combined_data, path='./data_source/combined_annual_data.xlsx')
+
+```
+

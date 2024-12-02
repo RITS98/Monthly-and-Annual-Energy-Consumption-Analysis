@@ -6092,12 +6092,12 @@ window.onload = function() {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> 1. Technical Description</a></li>
-  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">2.2</span> 2. Import Libraries</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> 3. Missing value analysis</a>
+  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> Technical Description</a></li>
+  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">2.2</span> Import Libraries</a></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a>
   <ul class="collapse">
-  <li><a href="#loading-the-monthly-energy-data" id="toc-loading-the-monthly-energy-data" class="nav-link" data-scroll-target="#loading-the-monthly-energy-data"><span class="header-section-number">2.3.1</span> 3.1. Loading the Monthly Energy Data</a></li>
-  <li><a href="#loading-the-annual-energy-data" id="toc-loading-the-annual-energy-data" class="nav-link" data-scroll-target="#loading-the-annual-energy-data"><span class="header-section-number">2.3.2</span> 3.2. Loading the Annual Energy Data</a></li>
+  <li><a href="#loading-the-monthly-energy-data" id="toc-loading-the-monthly-energy-data" class="nav-link" data-scroll-target="#loading-the-monthly-energy-data"><span class="header-section-number">2.3.1</span> Loading the Monthly Energy Data</a></li>
+  <li><a href="#loading-the-annual-energy-data" id="toc-loading-the-annual-energy-data" class="nav-link" data-scroll-target="#loading-the-annual-energy-data"><span class="header-section-number">2.3.2</span> Loading the Annual Energy Data</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RITS98/Monthly-and-Annual-Energy-Consumption-Analysis/edit/main/data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RITS98/Monthly-and-Annual-Energy-Consumption-Analysis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -6125,14 +6125,14 @@ window.onload = function() {
 
 
 <section id="technical-description" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> 1. Technical Description</h2>
+<h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> Technical Description</h2>
 <p>Dataset Name: <strong>Monthly and Annual Energy Consumption by Sector</strong></p>
 <p>This dataset includes monthly data for energy production and consumption by different sectors depending on the sources, the origins, and the usages since 1973, and annual data since 1949 for the United States. This dataset is collected and published by the US Energy Information Administration on a monthly basis, where the organization release preliminary data for the new month, often estimated, and revise previous numbers.</p>
 <p>For this project, we will examine the monthly and annual table for the primary energy sources overview, both available at data.gov offered by the Department of Energy at <a href="https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector" class="uri">https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector</a></p>
 <p>The data is available both in csv files, xls files, and pdf ready to be processed.</p>
 </section>
 <section id="import-libraries" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">2.2</span> 2. Import Libraries</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">2.2</span> Import Libraries</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -6158,18 +6158,19 @@ Attaching package: 'dplyr'</code></pre>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">library</span>(tidyr))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">library</span>(stringr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">library</span>(stringr))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">library</span>(writexl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> 3. Missing value analysis</h2>
+<h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
 <section id="loading-the-monthly-energy-data" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="loading-the-monthly-energy-data"><span class="header-section-number">2.3.1</span> 3.1. Loading the Monthly Energy Data</h3>
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="loading-the-monthly-energy-data"><span class="header-section-number">2.3.1</span> Loading the Monthly Energy Data</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>energy_df_monthly <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"data.xlsx"</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>energy_df_monthly <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data_source/data/energy_overview_data.xlsx"</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>energy_df_monthly <span class="ot">&lt;-</span> energy_df_monthly[<span class="sc">-</span><span class="dv">1</span>, ]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>energy_df_monthly[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(energy_df_monthly[, <span class="sc">-</span><span class="dv">1</span>], as.numeric)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>energy_df_monthly[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(energy_df_monthly[[<span class="dv">1</span>]])</span>
@@ -6252,11 +6253,11 @@ Attaching package: 'dplyr'</code></pre>
 <p>The above visualization is a better representation of data missingness. The above datapoints are all present at 0 mark. It shows none of the columns in the dataset has missing value.</p>
 </section>
 <section id="loading-the-annual-energy-data" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="loading-the-annual-energy-data"><span class="header-section-number">2.3.2</span> 3.2. Loading the Annual Energy Data</h3>
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="loading-the-annual-energy-data"><span class="header-section-number">2.3.2</span> Loading the Annual Energy Data</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span><span class="st">'data.xlsx'</span>, <span class="at">sheet=</span><span class="dv">2</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span><span class="st">'./data_source/data/energy_overview_data.xlsx'</span>, <span class="at">sheet=</span><span class="dv">2</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> energy_df_annual[<span class="sc">-</span><span class="dv">1</span>, ]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>energy_df_annual[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(energy_df_annual[, <span class="sc">-</span><span class="dv">1</span>], as.numeric)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(energy_df_annual)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Year"</span></span>
@@ -6330,6 +6331,55 @@ Attaching package: 'dplyr'</code></pre>
 </figure>
 </div>
 </div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="st">'./data_source/data'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> folder_path, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">.xlsx$'</span>, <span class="at">full.names =</span><span class="cn">TRUE</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>read_file_skip_rows <span class="ot">&lt;-</span> <span class="cf">function</span>(file_path){</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  new_colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">names</span>(df)[<span class="dv">1</span>], <span class="fu">paste</span>(<span class="fu">names</span>(df)[<span class="sc">-</span><span class="dv">1</span>], <span class="fu">as.character</span>(df[<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>]), <span class="at">sep =</span> <span class="st">" "</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> new_colnames</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df[<span class="sc">-</span><span class="dv">1</span>, ]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  df[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(df[, <span class="sc">-</span><span class="dv">1</span>], as.numeric)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  df[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df[[<span class="dv">1</span>]])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (df)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(file_list, read_file_skip_rows)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="cf">function</span>(x, y) <span class="fu">merge</span>(x, y, <span class="at">by=</span><span class="st">'Month'</span>, <span class="at">all=</span><span class="cn">TRUE</span>), data_list)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(combined_data, <span class="at">path=</span><span class="st">'./data_source/combined_monthly_data.xlsx'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="st">'./data_source/data'</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> folder_path, <span class="at">pattern =</span> <span class="st">'</span><span class="sc">\\</span><span class="st">.xlsx$'</span>, <span class="at">full.names =</span><span class="cn">TRUE</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>read_file_skip_rows <span class="ot">&lt;-</span> <span class="cf">function</span>(file_path){</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file_path, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  new_colnames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">names</span>(df)[<span class="dv">1</span>], <span class="fu">paste</span>(<span class="fu">names</span>(df)[<span class="sc">-</span><span class="dv">1</span>], <span class="fu">as.character</span>(df[<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>]), <span class="at">sep =</span> <span class="st">" "</span>))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> new_colnames</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(df)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">'Year'</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> df[<span class="sc">-</span><span class="dv">1</span>, ]</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  df[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(df[, <span class="sc">-</span><span class="dv">1</span>], as.numeric)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  df[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df[[<span class="dv">1</span>]])</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> (df)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(file_list, read_file_skip_rows)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="cf">function</span>(x, y) <span class="fu">merge</span>(x, y, <span class="at">by=</span><span class="st">'Year'</span>, <span class="at">all=</span><span class="cn">TRUE</span>), data_list)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">write_xlsx</span>(combined_data, <span class="at">path=</span><span class="st">'./data_source/combined_annual_data.xlsx'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
