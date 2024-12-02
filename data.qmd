@@ -14,7 +14,7 @@ editor:
 
 # Data
 
-## 1. Technical Description
+## Technical Description
 
 Dataset Name: **Monthly and Annual Energy Consumption by Sector**
 
@@ -34,7 +34,7 @@ the Department of Energy at
 The data is available both in csv files, xls files, and pdf ready to be
 processed.
 
-## 2. Import Libraries
+## Import Libraries
 
 ```{r}
 invisible(library(readxl))
@@ -45,9 +45,9 @@ invisible(library(tidyr))
 invisible(library(stringr))
 ```
 
-## 3. Missing value analysis
+## Missing value analysis
 
-### 3.1. Loading the Monthly Energy Data
+### Loading the Monthly Energy Data
 
 ```{r}
 energy_df_monthly <- read_xlsx(path = "data.xlsx", sheet=1, skip=9)

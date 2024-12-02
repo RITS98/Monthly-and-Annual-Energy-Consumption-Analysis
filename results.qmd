@@ -13,7 +13,7 @@ editor:
 ---
 # Results
 
-## 1. Energy Production and Consumption Overview
+## Energy Production and Consumption Overview
 
 ```{r}
 invisible(library(readxl))
@@ -32,7 +32,7 @@ colnames(energy_df_annual)[1] <- "Year"
 energy_df_annual
 ```
 
-### 1.1. Primary Energy Production
+### Primary Energy Production
 
 ```{r}
 ggplot(energy_df_annual, aes(x=Year)) + 
@@ -62,7 +62,7 @@ The graph illustrates the trend in primary energy production from 1950 to 2020. 
 
 **Nuclear and Renewable Energy Production** : These lines remain relatively flat compared to the fossil fuel, indicating that these energy sources have contributed less to the overall primary energy production. They show slight increases over time but are not as pronounced as the fossil fuel.
 
-### 1.2. Primary Energy Consumption
+### Primary Energy Consumption
 
 ```{r}
 ggplot(energy_df_annual, aes(x=Year)) +
@@ -98,7 +98,7 @@ ggplot(energy_df_annual, aes(x=Year)) +
 
 The fossil fuels make a large chunk of energy consumption throughout the years. The other energy consumption source like nuclear and renewable has very little contribution. There is a serious need of investments in these energy sources in order to catch up or reduce the dependence of fossil fuels.
 
-### 1.3. Primary Energy Imports and Exports
+### Primary Energy Imports and Exports
 
 ```{r}
 ggplot(energy_df_annual, aes(x=Year, y=`Primary Energy Net Imports`)) + 
