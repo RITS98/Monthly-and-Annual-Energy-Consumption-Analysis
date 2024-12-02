@@ -1,5 +1,4 @@
 # Results
-
 ## 1. Energy Production and Consumption Overview
 
 ```{r}
