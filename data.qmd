@@ -51,7 +51,7 @@ invisible(library(stringr))
 
 ```{r}
 energy_df_monthly <- read_xlsx(path = "data.xlsx", sheet=1, skip=9)
-energy_df_monthly <- energy_df[-1, ]
+energy_df_monthly <- energy_df_monthly[-1, ]
 energy_df_monthly[, -1] <- lapply(energy_df_monthly[, -1], as.numeric)
 energy_df_monthly[[1]] <- as.Date(energy_df_monthly[[1]])
 energy_df_monthly
