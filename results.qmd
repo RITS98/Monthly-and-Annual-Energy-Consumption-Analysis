@@ -1,2 +1,103 @@
 # Results
-placeholder
+
+## 1. Energy Production and Consumption Overview
+
+```{r}
+energy_df_annual
+```
+
+### 1.1. Primary Energy Production
+
+```{r}
+ggplot(energy_df_annual, aes(x=Year)) + 
+  geom_line(aes(y=`Total Fossil Fuels Production`, color='Fossil Fuels Production')) +
+  geom_line(aes(y=`Nuclear Electric Power Production`, color='Nuclear Power Production')) +
+  geom_line(aes(y=`Total Renewable Energy Production`, color='Renewable Energy Production')) +
+  labs(
+    title='Primary Energy Production',
+    x = 'Year',
+    y = 'Production (Quadrillion Btu)',
+    caption = 'Data Source: U.S. Energy Information Association',
+  ) + 
+  theme(
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    legend.position = 'bottom',
+    legend.box = 'horizontal',
+    legend.title = element_blank()
+  ) +
+  scale_color_manual(values = c('Fossil Fuels Production' = 'red', 
+                                'Nuclear Power Production' = 'blue', 
+                                'Renewable Energy Production' = 'green'))
+```
+
+The graph illustrates the trend in primary energy production from 1950 to 2020. Initially, there is a steady increase from approximately 28 quadrillion Btu in 1950 to 59 quadrillion Btu by 1970. This is followed by a plateau in production from 1970 to 2010. After 2010, there is a noticeable spike in production, which may be attributed to advancements in high-performance computing in large data centers which needs high energy.
+
+**Fossil Fuels Production** : This line shows a significant increase over the years, indicating a substantial rise in energy production. It suggests that this energy source has been the dominant contributor to primary energy production.
+
+**Nuclear and Renewable Energy Production** : These lines remain relatively flat compared to the fossil fuel, indicating that these energy sources have contributed less to the overall primary energy production. They show slight increases over time but are not as pronounced as the fossil fuel.
+
+### 1.2. Primary Energy Consumption
+
+```{r}
+ggplot(energy_df_annual, aes(x=Year)) +
+  geom_line(aes(y=`Total Fossil Fuels Consumption`, color='Fossil Fuels Consumption')) +
+  geom_line(aes(y=`Nuclear Electric Power Consumption`, color='Nuclear Power Consumption')) +
+  geom_line(aes(y=`Total Renewable Energy Consumption`, color='Renewable Energy Consumption')) +
+  labs(
+    title='Primary Energy Consumption',
+    x='Year',
+    y='Consumption (Quadrillion Btu)',
+    caption = 'Data Source: U.S. Energy Information Association'
+  ) + 
+  scale_color_manual(
+    values = c(
+      'Fossil Fuels Consumption' = 'red',
+      'Nuclear Power Consumption' = 'blue',
+      'Renewable Energy Consumption' = 'green'
+    )
+  ) +
+  theme(
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    legend.position = 'bottom',
+    legend.box = 'horizontal',
+    legend.title = element_blank()
+  )
+```
+
+**Fossil Fuels Consumption** : This is the dominant source of energy consumption throughout the period. There is a steady increase from 1950 to around 2005, with some fluctuations. After 2005, the consumption plateaus with minor ups and downs.
+
+**Nuclear Power Consumption** : This energy consumption starts to become little significant around the late 1960s and early 1970s. It shows gradual growth until about 2000, after which it stabilizes.
+
+**Renewable Energy Consumption** : This energy consumption begins to rise noticeably in the late 1990s. It shows a steady increase, especially post-2000, and appears to be catching up with nuclear power by the end of the period.
+
+The fossil fuels make a large chunk of energy consumption throughout the years. The other energy consumption source like nuclear and renewable has very little contribution. There is a serious need of investments in these energy sources in order to catch up or reduce the dependence of fossil fuels.
+
+### 1.3. Primary Energy Imports and Exports
+
+```{r}
+ggplot(energy_df_annual, aes(x=Year, y=`Primary Energy Net Imports`)) + 
+  geom_bar(stat = 'identity', fill='orange', color='black') + 
+  labs(
+    title='Primary Energy Net Imports',
+    x = 'Year',
+    y = 'Energy (Quadrillion Btu)',
+    caption = 'Data Source: U.S. Energy Information Associaton'
+  ) + 
+  theme(
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+  )
+```
+
+The chart shows the net imports of primary energy into the United States over time.
+
+**Observations** :
+
+-   1950s to Early 1970s: The net energy imports were relatively low and stable. This period shows minimal dependency on energy imports.
+
+-   Mid-1970s to Early 1980s: There was a noticeable increase in net energy imports, likely due to rising energy demands and geopolitical events affecting oil supply. Since the 1970s, the global oil trade has been predominantly conducted in U.S. dollars (USD), creating a symbiosis between America's currency and the world's most traded commodity. The petrodollar emerged as an economic concept in the 1970s as growing U.S. imports of increasingly costly crude oil increased the dollar holdings of foreign producers.
+
+-   1980s to Early 2000s: A significant rise in net imports occurred, peaking around the mid-2000s. This reflects increased energy consumption and reliance on foreign energy sources. The U.S. experienced growing energy demands driven by economic expansion and technological advancements. This led to higher consumption of oil and natural gas. The U.S. became increasingly reliant on foreign oil, with imports rising significantly.
+
+-   Mid-2000s to Present: There is a sharp decline in net imports, eventually turning negative. This indicates that the U.S. became a net exporter of primary energy. Factors contributing to this include increased domestic energy production (especially from shale gas and oil), improved energy efficiency, and shifts towards renewable energy sources. (Source: [U.S. Energy Independence](https://en.wikipedia.org/wiki/United_States_energy_independence))
+
+Overall, the chart illustrates a transition from high dependency on imported energy to a position where the U.S. exports more energy than it imports.
