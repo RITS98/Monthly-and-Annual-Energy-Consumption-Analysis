@@ -14,77 +14,151 @@ editor:
 
 # Data
 
-## Technical Description
+## 1. Technical Description
 
 Dataset Name: **Monthly and Annual Energy Consumption by Sector**
 
-This dataset includes monthly data for energy production and consumption by different sectors depending on the sources, the origins, and the usages since 1973, and annual data since 1949 for the United States. This dataset is collected and published by the US Energy Information Administration on a monthly basis, where the organization release preliminary data for the new month, often estimated, and revise previous numbers.
+This dataset includes monthly data for energy production and consumption
+by different sectors depending on the sources, the origins, and the
+usages since 1973, and annual data since 1949 for the United States.
+This dataset is collected and published by the US Energy Information
+Administration on a monthly basis, where the organization release
+preliminary data for the new month, often estimated, and revise previous
+numbers.
 
-For this project, we will examine the monthly and annual table for the primary energy sources overview, both available at data.gov offered by the Department of Energy at <https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector>
+For this project, we will examine the monthly and annual table for the
+primary energy sources overview, both available at data.gov offered by
+the Department of Energy at
+<https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector>
 
-The data is available both in csv files, xls files, and pdf ready to be processed.
+The data is available both in csv files, xls files, and pdf ready to be
+processed.
 
-## Import Libraries
+## 2. Import Libraries
 
 ```{r}
-library(readxl)
-library(naniar)
-library(ggplot2)
+invisible(library(readxl))
+invisible(library(naniar))
+invisible(library(ggplot2))
+invisible(library(dplyr))
+invisible(library(tidyr))
+invisible(library(stringr))
 ```
 
-## Missing value analysis
+## 3. Missing value analysis
+
+### 3.1. Loading the Monthly Energy Data
 
 ```{r}
-energy_df <- read_xlsx(path = "data.xlsx", sheet=1, skip=9)
-energy_df <- energy_df[-1, ]
-energy_df[, -1] <- lapply(energy_df[, -1], as.numeric)
-energy_df[[1]] <- as.Date(energy_df[[1]])
-energy_df
+energy_df_monthly <- read_xlsx(path = "data.xlsx", sheet=1, skip=9)
+energy_df_monthly <- energy_df[-1, ]
+energy_df_monthly[, -1] <- lapply(energy_df_monthly[, -1], as.numeric)
+energy_df_monthly[[1]] <- as.Date(energy_df_monthly[[1]])
+energy_df_monthly
 ```
 
-The original excel dataset contained metadata information like source, titles, etc. The top 9 rows of the excel contains metadata information which distorts the structure of the data. Therefore these metadata information is filtered out while importing the data into the R environment for easy data analysis.
+The original excel dataset contained metadata information like source,
+titles, etc. The top 9 rows of the excel contains metadata information
+which distorts the structure of the data. Therefore these metadata
+information is filtered out while importing the data into the R
+environment for easy data analysis.
 
-The datatype of columns from column 2 to end is changed to numeric datatype. The datatype of column 1 is date.
+The datatype of columns from column 2 to end is changed to numeric
+datatype. The datatype of column 1 is date.
 
-Each columns starting from `Total Fossil Fuels Production` shows energy production in **Quadrillion Btu**. 1 quad (short for quadrillion Btu) is 10\^15 Btu, which is about 1 exajoule (1.055×10\^18 J). Quads are used in the United States for representing the annual energy consumption of large economies: for example, the U.S. economy used 99.75 quads in 2005. One quad/year is about 33.43 gigawatts. (Source:[British thermal unit](https://en.wikipedia.org/wiki/British_thermal_unit#:~:text=1%20quad%20(short%20for%20quadrillion,used%2099.75%20quads%20in%202005.)))
+Each columns starting from `Total Fossil Fuels Production` shows energy
+production in **Quadrillion Btu**. 1 quad (short for quadrillion Btu) is
+10\^15 Btu, which is about 1 exajoule (1.055×10\^18 J). Quads are used
+in the United States for representing the annual energy consumption of
+large economies: for example, the U.S. economy used 99.75 quads in 2005.
+One quad/year is about 33.43 gigawatts. (Source:[British thermal
+unit](https://en.wikipedia.org/wiki/British_thermal_unit#:~:text=1%20quad%20(short%20for%20quadrillion,used%2099.75%20quads%20in%202005.)))
 
 ```{r}
 missing_data_summary <- data.frame(
-  Missing_Count = colSums(is.na(energy_df))
+  Missing_Count = colSums(is.na(energy_df_monthly))
 )
 
 missing_data_summary
 ```
 
-The dataset is summarized to get the amount of missing values in each column. As per the above table, there is no Null values in any of the columns of the dataset.
+The dataset is summarized to get the amount of missing values in each
+column. As per the above table, there is no Null values in any of the
+columns of the dataset.
 
 ```{r}
-vis_miss(energy_df) +
+vis_miss(energy_df_monthly) +
   theme(
     axis.text.x = element_text(angle = 270, hjust = 1),
     axis.title = element_text(size = 10),
     plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkblue')
   ) + 
   labs(
-    title = "Percentage of datapoints missing in each column",
+    title = "Percentage of datapoints missing in each column (Monthly Energy Data)",
     x = "Column Variables",
     y = "Number of Observations"
   )
 ```
 
-The above visualization shows each column variable has 0% missing data. There is no null or missing value in any of the columns of the dataset.
+The above visualization shows each column variable has 0% missing data.
+There is no null or missing value in any of the columns of the dataset.
 
 ```{r}
-gg_miss_var(energy_df) +
+gg_miss_var(energy_df_monthly) +
   theme(
     plot.title = element_text(hjust = 0.5, color = "darkblue", face = 'bold')
   ) +
   labs(
-    title = "Missing Values by Column Variables",
+    title = "Missing Values by Column Variables (Monthly Energy Data)",
     x = "Column Variables",
     y = "Number of Missing Values"
   )
 ```
-The above visualization is a better representation of data missingness. The above datapoints are all present at 0 mark. It shows none of the columns in the dataset has missing value.
 
+The above visualization is a better representation of data missingness.
+The above datapoints are all present at 0 mark. It shows none of the
+columns in the dataset has missing value.
 
+### 3.2. Loading the Annual Energy Data
+
+```{r}
+energy_df_annual <- read_xlsx(path='data.xlsx', sheet=2, skip=9)
+energy_df_annual <- energy_df_annual[-1, ]
+energy_df_annual[, -1] <- lapply(energy_df_annual[, -1], as.numeric)
+colnames(energy_df_annual)[1] <- "Year"
+energy_df_annual
+```
+
+```{r}
+missing_data_summary <- data.frame(
+  Missing_Count = colSums(is.na(energy_df_annual))
+)
+
+missing_data_summary
+```
+
+```{r}
+vis_miss(energy_df_annual) + 
+  theme(
+    axis.text.x = element_text(angle=270, hjust=1),
+    axis.title = element_text(size=10),
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue')
+  ) +
+  labs(
+    title = "Percentage of datapoints missing in each column (Annual Energy Data)",
+    x = "Column Variables",
+    y = "Number of Observations"
+  )
+```
+
+```{r}
+gg_miss_var(energy_df_annual) +
+  theme(
+    plot.title = element_text(face='bold', color='darkblue')
+  ) +
+  labs(
+    title = "Missing Values by Column Variables (Annual Energy Data)",
+    x = "Column Variables",
+    y = "Number of Missing Values"
+  )
+```
