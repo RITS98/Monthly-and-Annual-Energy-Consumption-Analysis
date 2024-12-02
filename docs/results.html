@@ -6156,7 +6156,7 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span><span class="st">'data.xlsx'</span>, <span class="at">sheet=</span><span class="dv">2</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span><span class="st">'./data_source/data/energy_overview_data.xlsx'</span>, <span class="at">sheet=</span><span class="dv">2</span>, <span class="at">skip=</span><span class="dv">9</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>energy_df_annual <span class="ot">&lt;-</span> energy_df_annual[<span class="sc">-</span><span class="dv">1</span>, ]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>energy_df_annual[, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(energy_df_annual[, <span class="sc">-</span><span class="dv">1</span>], as.numeric)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(energy_df_annual)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Year"</span></span>

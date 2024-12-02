@@ -25,7 +25,7 @@ invisible(library(stringr))
 ```
 
 ```{r}
-energy_df_annual <- read_xlsx(path='data.xlsx', sheet=2, skip=9)
+energy_df_annual <- read_xlsx(path='./data_source/data/energy_overview_data.xlsx', sheet=2, skip=9)
 energy_df_annual <- energy_df_annual[-1, ]
 energy_df_annual[, -1] <- lapply(energy_df_annual[, -1], as.numeric)
 colnames(energy_df_annual)[1] <- "Year"
@@ -127,3 +127,4 @@ The chart shows the net imports of primary energy into the United States over ti
 -   Mid-2000s to Present: There is a sharp decline in net imports, eventually turning negative. This indicates that the U.S. became a net exporter of primary energy. Factors contributing to this include increased domestic energy production (especially from shale gas and oil), improved energy efficiency, and shifts towards renewable energy sources. (Source: [U.S. Energy Independence](https://en.wikipedia.org/wiki/United_States_energy_independence))
 
 Overall, the chart illustrates a transition from high dependency on imported energy to a position where the U.S. exports more energy than it imports.
+
