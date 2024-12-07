@@ -472,6 +472,10 @@ dygraph(cbind(rs_energy_consumed, rs_energy_loss), main='Energy Consumed vs Ener
   dyAxis("y", label = "Energy (Trillion Btu)")
 ```
 
+The green line represents energy consumption, which follows a distinct seasonal pattern. Energy use regularly peaks at around 3,500 trillion BTU and drops to about 2,000 trillion BTU throughout each year. These peaks likely correspond to winter months when heating demands are highest, while valleys represent periods of lower energy usage, typically during milder seasons.
+
+The blue line shows energy loss, which mirrors the consumption pattern but at a significantly lower level. Energy losses typically fluctuate between 500 and 1,000 trillion BTU. This parallel pattern suggests that energy losses are directly proportional to consumption – when more energy is consumed, more is lost through various inefficiencies.
+
 ### Energy Overview by Commercial Sector
 ```{r}
 rs_energy_consumed <- xts(x = energy_data_monthly$`Total Energy Consumed by the Commercial Sector (Trillion Btu)`, order.by = energy_data_monthly$Month)
@@ -485,6 +489,15 @@ dygraph(cbind(rs_energy_consumed, rs_energy_loss), main='Energy Consumed vs Ener
   dyAxis("x", label = "Timeline") |>
   dyAxis("y", label = "Energy (Trillion Btu)")
 ```
+
+The green line represents the total energy consumed by the commercial sector, measured in trillion BTU (British Thermal Units). Starting from around 1,000 trillion BTU in the 1970s, consumption steadily increased to peak at approximately 2,500 trillion BTU in the mid-2000s. After 2010, the consumption pattern shows more fluctuation but generally maintains a high level around 2,000 trillion BTU.
+
+The blue line shows energy losses, which are significantly lower than consumption but follow a similar upward trend. Losses started at about 300 trillion BTU in the 1970s and gradually increased to around 700-800 trillion BTU by the 2010s. These losses likely represent energy wasted through inefficient systems, heat escape, and conversion processes.
+
+Both lines show regular up-and-down patterns throughout each year, indicating seasonal variations in energy use. These zigzag patterns are more pronounced in the consumption (green) line, suggesting that commercial energy use is heavily influenced by seasonal factors like heating in winter and cooling in summer.
+
+Toward the end of the graph (2015-2020s), both consumption and losses show a slight downward trend, possibly reflecting improved energy efficiency in the commercial sector or changes in business operations. The gap between consumption and loss has remained relatively consistent in recent years, suggesting that efficiency ratios have stabilized.
+
 
 ### Energy Overview by Industrial Sector
 ```{r}
@@ -500,6 +513,22 @@ dygraph(cbind(rs_energy_consumed, rs_energy_loss), main='Energy Consumed vs Ener
   dyAxis("y", label = "Energy (Trillion Btu)")
 ```
 
+The green line at the top shows how much energy industries actually used. The amount typically stays between 2,500 and 3,500 trillion Btu (British thermal units). There are some interesting patterns:  
+- A peak around the year 2000, reaching about 3,500 trillion Btu.  
+- Some noticeable dips, particularly around 1985 and 2008 due to strong global competition and the global recession respectively.
+- Regular up and down patterns that might represent seasonal changes.  
+
+The blue line at the bottom shows energy that was wasted or lost during use. This line is much lower, staying around 500 trillion Btu. The loss is fairly consistent over time, though it shows:  
+- A slight increase from 1980 to 2000.  
+- A gradual decrease after 2000.  
+- Much smaller variations compared to the consumption line.  
+
+The relationship between energy consumed and lost has remained relatively stable over these 40 years. The gap between the green and blue lines represents the energy that was successfully used for industrial purposes. This shows that industries typically lose about 15-20% of their energy during use, while successfully using about 80-85% of it.
+
+The graph reveals that while industrial energy use has fluctuated over time, the efficiency of energy use (shown by the relatively stable loss rate) hasn’t changed dramatically over this period.  The graph also shows much less seasonal variations as compared to energy graph of residential and commercial sectors.
+
+
+
 ### Energy Overview by Transportation Sector
 ```{r}
 rs_energy_consumed <- xts(x = energy_data_monthly$`Total Energy Consumed by the Transportation Sector (Trillion Btu)`, order.by = energy_data_monthly$Month)
@@ -514,6 +543,17 @@ dygraph(cbind(rs_energy_consumed, rs_energy_loss), main='Energy Consumed vs Ener
   dyAxis("y", label = "Energy (Trillion Btu)")
 ```
 
+The green line, representing energy consumed, shows a general upward trend from about 1,500 trillion Btu in 1980 to approximately 2,500 trillion Btu by 2020. This indicates a significant increase in energy consumption in the transportation sector over this period.
 
+- The graph displays regular seasonal fluctuations throughout the years.  
+- A notable peak occurs around 2007-2008, reaching about 2,500 trillion Btu.  
+- A sharp drop is visible around 2020, likely corresponding to the global pandemic.  
+- Recovery appears to occur after the 2020 drop, returning to previous levels.  
+
+The blue line at the bottom of the graph, representing energy loss, remains remarkably constant and close to zero throughout the entire period. This suggests that the transportation sector has maintained consistent energy efficiency levels despite increasing consumption.
+
+The graph shows regular up-and-down patterns within each year, indicating seasonal changes in transportation energy use. These fluctuations appear to be fairly consistent in amplitude throughout the measured period.
+
+This visualization effectively demonstrates how transportation energy demands have grown substantially over the past 40 years, while energy loss has remained minimal. The data suggests improvements in energy efficiency technologies have helped maintain low energy losses despite increasing consumption levels.
 
 
