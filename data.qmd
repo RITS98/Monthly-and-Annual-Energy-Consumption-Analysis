@@ -1292,13 +1292,12 @@ folder_path <- './data_source/data'
 file_list <- list.files(path = folder_path, pattern = '\\.xlsx$', full.names =TRUE)
 
 read_file_skip_rows <- function(file_path){
-  df <- read_xlsx(file_path, sheet=1, skip=9)
+  df <- read_xlsx(file_path, sheet=2, skip=9)
   new_colnames <- c(names(df)[1], paste(names(df)[-1], as.character(df[1, -1]), sep = " "))
   colnames(df) <- new_colnames
   colnames(df)[1] <- 'Year'
   df <- df[-1, ]
   df[, -1] <- lapply(df[, -1], as.numeric)
-  df[[1]] <- as.Date(df[[1]])
   return (df)
 }
 
