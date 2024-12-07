@@ -15,7 +15,7 @@ editor:
 
 ## Loading the data
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
 invisible(library(readxl))
 invisible(library(naniar))
 invisible(library(ggplot2))
