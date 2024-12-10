@@ -28,6 +28,8 @@ invisible(library(dygraphs))
 invisible(library(xts))
 invisible(library(tidyverse))
 invisible(library(lubridate))
+invisible(library(sf))
+invisible(library(rnaturalearth))
 ```
 
 ```{r}
@@ -556,4 +558,78 @@ The graph shows regular up-and-down patterns within each year, indicating season
 
 This visualization effectively demonstrates how transportation energy demands have grown substantially over the past 40 years, while energy loss has remained minimal. The data suggests improvements in energy efficiency technologies have helped maintain low energy losses despite increasing consumption levels.
 
+## Statewise Energy Production and Cost Analysis
+```{r, }
+statewise <- read.csv('./data_source/Statewise_Energy_Production_Consumption_Cost.csv')
+statewise <- statewise[, -c(3,5,7)]
+statewise <- statewise |> rename(
+  `Production_pecent` = `Production..U.S..Share`,
+  `Consumption_per_capita` = `Consumption.per.Capita..Million.Btu`,
+  `Expenditutre_per_capita` = `Expenditures.per.Capita..Dollars`
+)
 
+us_states <- ne_states(country = "United States of America", returnclass = "sf")
+us_states <- us_states %>% select(name, iso_3166_2)
+us_states <- us_states %>% mutate(State = substring(iso_3166_2, first=4, last=5)) |>
+  filter(State %in% c("AK", "HI") | !State %in% c("GU", "VI", "MP", "AS", "PR"))
+
+statewise <- us_states %>% inner_join(statewise, by = "State")
+statewise
+```
+
+```{r, warning=FALSE, fig.width=20, fig.height=10}
+ggplot(data = (statewise)) +
+  geom_sf(aes(fill = Production_pecent), color = "black") +
+  scale_fill_distiller(palette = "Reds", direction=1, name = "Energy Production %", 
+                       na.value = "grey50") +
+  geom_sf_text(aes(label = State), size = 3, color = "black") +
+  coord_sf(xlim = c(-180, -50), ylim = c(15, 75)) +
+  theme_void() + 
+  labs(
+    title = "Energy Production % by US Mainland, Alaska, and Hawaii") +
+  theme(
+    plot.title = element_text(face='bold', hjust=0.5, color='darkblue'),
+  )
+```
+This choropleth map displays the percentage distribution of energy production across the United States, including Alaska and Hawaii. The color gradient ranges from light pink (lowest percentage) to dark red (highest percentage), with values ranging from 0% to 25%.
+
+Texas stands out prominently in dark red, contributing approximately 25% of the nation’s total energy production. The map reveals a concentration of energy production in the central United States, particularly in the South-Central region. Most coastal states and the Northeast show relatively lower energy production percentages, as indicated by their lighter shading.
+
+- The Western states generally show minimal energy production.  
+- Alaska and Hawaii, shown separately from the mainland, display low production levels.  
+- The Midwest and Eastern seaboard states contribute relatively small percentages to the national total.  
+
+The visualization effectively demonstrates the dominance of Texas in U.S. energy production while highlighting the significant regional disparities in energy production across the country.
+
+
+
+```{r, fig.width=20, fig.height=10, warning=FALSE}
+ggplot(data = (statewise)) +
+  geom_sf(aes(fill = Expenditutre_per_capita), color = "black") +
+  scale_fill_distiller(palette = "Blues", direction=1, name = "Expenditure per capita", 
+                       na.value = "grey50") +
+  geom_sf_text(aes(label = State), size = 3, color = "black") +
+  coord_sf(xlim = c(-180, -50), ylim = c(15, 75)) +
+  theme_void() + 
+  labs(
+    title = "Energy Expenditure per Capita in US Mainland, Alaska, and Hawaii") +
+  theme(
+    plot.title = element_text(face='bold', hjust=0.5, color='darkblue'),
+  )
+```
+This map visualization shows the energy expenditure per capita across the United States, including Alaska and Hawaii. The data is represented through a color gradient, where darker teal/green indicates higher expenditure and lighter beige/brown shows lower expenditure.
+
+Regional Patterns
+Alaska stands out with the highest energy expenditure per capita, shown in deep teal color, suggesting spending of more than $12,000 per person.
+
+Mainland US shows varying levels of expenditure:  
+- The Western states generally show higher per capita spending, particularly in darker brown shades.  
+- The Midwest displays moderate expenditure levels in lighter brown tones.  
+- Several Northern states, particularly in the Mountain region, show spots of light blue, indicating different spending patterns.  
+- The Southeast region demonstrates moderate to high expenditure levels.  
+
+The expenditure scale ranges from approximately:  
+- Highest (teal): > $12,000.  
+- Mid-range (tan): $6,000-8,000.  
+- Lower range (light beige): $4,000.  
+This visualization effectively highlights the geographic disparities in energy spending across the United States, with notable variations between regions and individual states.
