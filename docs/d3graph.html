@@ -171,6 +171,132 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+CO2 Emissions Bar Chart
+</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.js"></script>
+<style>
+    .chart {
+      display: flex;
+      align-items: center;
+    }
+    .bar {
+      fill: steelblue;
+    }
+    
+    .bar:hover{
+      fill: orange
+    }
+    .axis text {
+      font-size: 12px;
+    }
+    
+    #slider1 .noUi-target {
+    border: none;
+    box-shadow: none;
+    background: #e9ecef;
+    height: 8px;
+    margin-top: -20px; /* Reduce gap between chart and slider */
+    }
+    
+    #slider1 .noUi-connect {
+        background: #007BFF;
+        height: 16px;
+    }
+    
+    #slider1 .noUi-handle {
+        width: 30px;
+        height: 29px;
+        border-radius: 100%;
+        background: #007BFF;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+        right: -8px; /* Center the handle */
+    }
+    
+    /* Remove default handle styling */
+    #slider1 .noUi-handle::before,
+    #slider1 .noUi-handle::after {
+        display: none;
+    }
+    
+    #slider2 .noUi-target {
+    border: none;
+    box-shadow: none;
+    background: #e9ecef;
+    height: 8px;
+    margin-top: -20px; /* Reduce gap between chart and slider */
+    }
+    
+    #slider2 .noUi-connect {
+        background: #007BFF;
+        height: 16px;
+    }
+    
+    #slider2 .noUi-handle {
+        width: 30px;
+        height: 29px;
+        border-radius: 100%;
+        background: #007BFF;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+        right: -8px; /* Center the handle */
+    }
+    
+    /* Remove default handle styling */
+    #slider2 .noUi-handle::before,
+    #slider2 .noUi-handle::after {
+        display: none;
+    }
+    
+    .tooltip{
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+    
+   
+
+  </style>
+
+
+<h2 style="text-align: center;" class="anchored">
+Primary Energy Production
+</h2>
+<label for="sourceDropdown2">Select Source:</label> <select id="sourceDropdown2"></select> <br><br>
+<div id="chart2">
+
+</div>
+<div id="slider2">
+
+</div>
+<br> <br>
+<h2 style="text-align: center;" class="anchored">
+CO<sub>2</sub> Emissions
+</h2>
+<label for="sourceDropdown1">Select Source:</label> <select id="sourceDropdown1"></select> <br> <br>
+<div id="chart1">
+
+</div>
+<div id="slider1">
+
+</div>
+<script src="./scripts/myscript.js">
+    
+</script>
+
+
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
