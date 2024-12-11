@@ -12,7 +12,7 @@ The data contains monthly data since January 1973 and annual data since 1949 on 
 
 Each month, U.S. Energy Information Administration (EIA) produces publication detailing monthly energy consumption. The publication includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values. 
 
-For this project, we have the compiled data till July 2024. This data will be used to perform data analysis and visualization. 
+For this project, we have the compiled 20 different data files ranging from fossil fuels production and consumption, monthly energy consumption, CO2 emissions to renewable energy, electricity prices and many more till July 2024. This data will be used to perform data analysis and visualization. 
 
 More granular data on each energy source can be found in the following link: https://www.eia.gov/totalenergy/data/browser/
 

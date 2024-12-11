@@ -32,10 +32,10 @@ available at data.gov offered by the Department of Energy at
 <https://catalog.data.gov/dataset/monthly-and-annual-energy-consumption-by-sector>
 
 The data is available both in csv files, xls files, and pdf ready to be
-processed. For this project, we have downloaded 19 excels files and did
-initial analysis on the missing data in each of this excel files. Then
-we have combined the data from all the excel files into a single excel
-file for easy processing and analysis of the data.
+processed. For this project, we have downloaded around 20 excel and csv
+files and did initial analysis on the missing data in each of this excel
+files. Then we have combined the data from all the excel files into a
+single excel file for easy processing and analysis of the data.
 
 ## Import Libraries
 
@@ -67,11 +67,11 @@ colnames(energy_df_annual)[1] <- "Year"
 energy_df_annual
 ```
 
-The original excel dataset contained metadata information like source,
-titles, etc. The top 9 rows of the excel contains metadata information
-which distorts the structure of the data. Therefore these metadata
-information is filtered out while importing the data into the R
-environment for easy data analysis.
+Every excel dataset contained metadata information like source, titles,
+etc. The top 9 rows of the excel contains metadata information which
+distorts the structure of the data. Therefore these metadata information
+is filtered out while importing the data into the R environment for easy
+data analysis.
 
 The datatype of columns from column 2 to end is changed to numeric
 datatype. The datatype of column 1 is date.
@@ -102,13 +102,13 @@ The dataset is summarized to get the amount of missing values in each
 column. As per the above table, there is no Null values in any of the
 columns of the dataset.
 
-```{r}
+```{r, fig.width=15, fig.height=5}
 vis_miss(energy_df_monthly) +
   theme(
     axis.text.x = element_text(angle = 270, hjust = 1),
     axis.title = element_text(size = 10),
-    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkblue'),
-    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'black'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'black')
   ) + 
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -121,8 +121,8 @@ vis_miss(energy_df_annual) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -138,8 +138,8 @@ There is no null or missing value in any of the columns of the dataset.
 ```{r}
 gg_miss_var(energy_df_monthly) +
   theme(
-    plot.title = element_text(hjust = 0.5, color = "darkblue", face = 'bold'),
-    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+    plot.title = element_text(hjust = 0.5, color = "black", face = 'bold'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'black')
   ) +
   labs(
     title = "Missing Values by Column Variables",
@@ -150,8 +150,8 @@ gg_miss_var(energy_df_monthly) +
 
 gg_miss_var(energy_df_annual) +
   theme(
-    plot.title = element_text(face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust = 0.5, color = 'darkblue')
+    plot.title = element_text(face='bold', color='black'),
+    plot.subtitle = element_text(hjust = 0.5, color = 'black')
   ) +
   labs(
     title = "Missing Values by Column Variables (Annual Energy Data)",
@@ -187,8 +187,8 @@ vis_miss(energy_df_monthly_pe_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -201,8 +201,8 @@ vis_miss(energy_df_annual_pe_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -226,8 +226,9 @@ vis_miss(energy_df_annual_pe_source) +
     Total,” “Coal Production,” “Natural Gas (Dry) Production,” “Crude
     Oil Production,” and others.
 
--   “Geothermal Energy Production” has 15% of its data missing. - “Solar
-    Energy Production” has the highest percentage of missing data at
+-   “Geothermal Energy Production” has 15% of its data missing.  
+
+-   “Solar Energy Production” has the highest percentage of missing data at
     47%.
 
 -   “Wind Energy Production” also has a significant amount of missing
@@ -256,8 +257,8 @@ vis_miss(energy_df_monthly_pe_consumption_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -270,8 +271,8 @@ vis_miss(energy_df_annual_pe_consumption_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -297,7 +298,7 @@ vis_miss(energy_df_annual_pe_consumption_source) +
 
 -   The column with the highest percentage of missing data points is
     "Wind Energy Consumption," with 45% of its data missing. This is
-    followed by "Solar Energy Consumption" with 47% missing data.
+    followed by "Solar Energy Consumption" and "Geothermal Energy Consumption" with 47% and 15% missing data respectively.
 
 -   Most columns have no missing data points. These include columns like
     "Consumption," "Total Renewable Energy Consumption," and "Total
@@ -321,13 +322,13 @@ energy_df_annual_pe_imports_source[[1]] <- as.Date(energy_df_annual_pe_imports_s
 energy_df_annual_pe_imports_source
 ```
 
-```{r, fig.height= 10}
+```{r, fig.height=5}
 vis_miss(energy_df_monthly_pe_imports_source) + 
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -340,8 +341,8 @@ vis_miss(energy_df_annual_pe_imports_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -353,13 +354,13 @@ vis_miss(energy_df_annual_pe_imports_source) +
 
 **Monthly Data**:
 
--   The "Biomass Imports" columns stand out with around 30% missing
+-   The "Biomass Imports" columns stand out with around 9% missing
     data.
 
 **Annual Data**:
 
 -   The column with the highest percentage of missing data is "Biomass
-    Imports" with 50% of its data points missing.
+    Imports" with 59% of its data points missing.
 
 ### Primary Energy Export Data
 
@@ -382,8 +383,8 @@ vis_miss(energy_df_monthly_pe_exports_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -396,8 +397,8 @@ vis_miss(energy_df_annual_pe_exports_source) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -421,13 +422,13 @@ vis_miss(energy_df_annual_pe_exports_source) +
 
 **Annual Data**:
 
--   Approximately 8.9% of data points are missing across all columns.
-    This means that out of all the data points in the dataset, 8.9% are
+-   Approximately 6.9% of data points are missing across all columns.
+    This means that out of all the data points in the dataset, 6.9% are
     not available.
 
 -   The majority of columns have zero levels of missing data (0%). This
     indicates that for most variables, the data is mostly complete.
-    There is one column, "Electricity Exports," with a significantly
+    There is one column, "Biomass Exports," with a significantly
     higher proportion of missing data (69%). This suggests that this
     particular variable has the most incomplete data within the dataset.
 
@@ -447,13 +448,13 @@ energy_df_annual_consumption_sector_1[[1]] <- as.Date(energy_df_annual_consumpti
 energy_df_annual_consumption_sector_1
 ```
 
-```{r, fig.width=15, fig.height=10}
+```{r, fig.width=15, fig.height=8}
 vis_miss(energy_df_monthly_consumption_sector_1) + 
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -466,8 +467,8 @@ vis_miss(energy_df_annual_consumption_sector_1) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -500,13 +501,13 @@ energy_df_annual_consumption_sector_2[[1]] <- as.Date(energy_df_annual_consumpti
 energy_df_annual_consumption_sector_2
 ```
 
-```{r, fig.width=15, fig.height=10, scroll=TRUE}
+```{r, fig.width=15, fig.height=8, scroll=TRUE}
 vis_miss(energy_df_monthly_consumption_sector_1) + 
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -519,8 +520,8 @@ vis_miss(energy_df_annual_consumption_sector_1) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -558,8 +559,8 @@ vis_miss(energy_df_monthly_petroleum) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -572,12 +573,12 @@ vis_miss(energy_df_annual_petroleum) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
-    subtitle = "Table: Petroleum OVerview Data (Annual Data)",
+    subtitle = "Table: Petroleum Overview Data (Annual Data)",
     x = "Column Variables",
     y = "Number of Observations"
   )
@@ -608,8 +609,8 @@ vis_miss(energy_df_monthly_petroleum_consumption_res_comm) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -622,8 +623,8 @@ vis_miss(energy_df_annual_petroleum_consumption_res_comm) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -637,7 +638,7 @@ vis_miss(energy_df_annual_petroleum_consumption_res_comm) +
 
 -   The chart highlights that the majority of the data points in the
     dataset are present, with only one column ("Petroleum Coke Consumed
-    by the Commercial Sector") having a significant amount of missing
+    by the Commercial Sector") having a good amount of missing
     data (31%).
 
 **Annual Data**:
@@ -668,8 +669,8 @@ vis_miss(energy_df_monthly_petroleum_consumption_indus) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -682,8 +683,8 @@ vis_miss(energy_df_annual_petroleum_consumption_indus) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -717,8 +718,8 @@ vis_miss(energy_df_monthly_petroleum_consumption_trans) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -731,8 +732,8 @@ vis_miss(energy_df_annual_petroleum_consumption_trans) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -782,8 +783,8 @@ vis_miss(energy_df_monthly_natural_gas) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -796,8 +797,8 @@ vis_miss(energy_df_annual_natural_gas) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -841,8 +842,8 @@ vis_miss(energy_df_monthly_natural_gas_consumption) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -855,8 +856,8 @@ vis_miss(energy_df_annual_natural_gas_consumption) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -874,11 +875,11 @@ vis_miss(energy_df_annual_natural_gas_consumption) +
 -   The dataset has a relatively high percentage of missing data in two
     specific columns: "Natural Gas Consumed by the Transportation
     Sector, Vehicle Fuel" and "Natural Gas Consumed by the Other
-    Industrial Sector, CHP."
+    Industrial Sector, CHP" of around 33%.
 
 **Annual Data**:
 
--   The dataset has a total of 15 columns. 8.5% of the data points
+-   The dataset has a total of 13 columns. 8.5% of the data points
     across all columns are missing. 91.5% of the data points are
     present.
 
@@ -909,8 +910,8 @@ vis_miss(energy_df_monthly_coal) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -923,8 +924,8 @@ vis_miss(energy_df_annual_coal) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -958,8 +959,8 @@ vis_miss(energy_df_monthly_coal_cons) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -972,8 +973,8 @@ vis_miss(energy_df_annual_coal_cons) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -994,7 +995,7 @@ vis_miss(energy_df_annual_coal_cons) +
 **Annual Data**:
 
 -   The dataset has 9.8% of data points missing across all columns. The
-    most missing data is in the "Coal Consumed by the Residential
+    missing data is in the "Coal Consumed by the Residential
     Sector" column (21%), followed by "Coal Consumed by the Commercial
     Sector, CHP" and "Coal Consumed by the Other Industrial Sector, CHP"
     (both at 53%).
@@ -1020,8 +1021,8 @@ vis_miss(energy_df_monthly_nuclear) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1034,8 +1035,8 @@ vis_miss(energy_df_annual_nuclear) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1077,8 +1078,8 @@ vis_miss(energy_df_monthly_price) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1091,8 +1092,8 @@ vis_miss(energy_df_annual_price) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1146,8 +1147,8 @@ vis_miss(energy_df_monthly_renewable) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1160,8 +1161,8 @@ vis_miss(energy_df_annual_renewable) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1219,8 +1220,8 @@ vis_miss(energy_df_monthly_co2) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1233,8 +1234,8 @@ vis_miss(energy_df_annual_co2) +
   theme(
     axis.text.x = element_text(angle=270, hjust=1),
     axis.title = element_text(size=10),
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
-    plot.subtitle = element_text(hjust=0.5, color='darkblue')
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
+    plot.subtitle = element_text(hjust=0.5, color='black')
   ) +
   labs(
     title = "Percentage of datapoints missing in each column",
@@ -1248,7 +1249,7 @@ There is no missing data in any of the dataset as per the graph.
 
 ## Combining Data
 
-Managing 19 separate Excel files for data analysis can be a challenging
+Managing around 20 separate Excel files for data analysis can be a challenging
 and time-consuming process, as it requires handling multiple file
 operations, ensuring consistency across datasets, and potentially
 dealing with overlapping or missing data. A more efficient approach is
@@ -1306,8 +1307,4 @@ data_list <- lapply(file_list, read_file_skip_rows)
 combined_data <- Reduce(function(x, y) merge(x, y, by='Year', all=TRUE), data_list)
 
 write_xlsx(combined_data, path='./data_source/combined_annual_data.xlsx')
-```
-
-```{r}
-
 ```
