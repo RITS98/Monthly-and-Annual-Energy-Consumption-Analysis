@@ -108,5 +108,15 @@
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Results</span>"
     ]
+  },
+  {
+    "objectID": "d3graph.html",
+    "href": "d3graph.html",
+    "title": "4  Interactive graph",
+    "section": "",
+    "text": "CO2 Emissions Bar Chart\n\n\n\n\n\n\n\n\nPrimary Energy Production\n\nSelect Source:  \n\n\n\n\n\n\n \n\nCO2 Emissions\n\nSelect Source:",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
   }
 ]
