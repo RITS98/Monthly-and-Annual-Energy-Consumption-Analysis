@@ -633,3 +633,64 @@ The expenditure scale ranges from approximately:
 - Mid-range (tan): $6,000-8,000.  
 - Lower range (light beige): $4,000.  
 This visualization effectively highlights the geographic disparities in energy spending across the United States, with notable variations between regions and individual states.
+
+
+## CO2 Emissions By Fuel Type
+```{r, fig.width=10, fig.height=8}
+co2 <- energy_data_annual |> select(
+  `Year`,
+  `Coal, Including Coal Coke Net Imports, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  `Natural Gas, Excluding Supplemental Gaseous Fuels, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,     
+  `Aviation Gasoline CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,                                      
+  `Kerosene CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,                                               
+  `Motor Gasoline, Excluding Ethanol, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  `Petroleum, Excluding Biofuels, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  `Other Petroleum Products CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,                               
+) |> rename(
+  coal = `Coal, Including Coal Coke Net Imports, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  natural_gas = `Natural Gas, Excluding Supplemental Gaseous Fuels, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  aviation = `Aviation Gasoline CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  kerosene = `Kerosene CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  motor_gasoline = `Motor Gasoline, Excluding Ethanol, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  petroleum = `Petroleum, Excluding Biofuels, CO2 Emissions (Million Metric Tons of Carbon Dioxide)`,
+  other = `Other Petroleum Products CO2 Emissions (Million Metric Tons of Carbon Dioxide)`
+) |> drop_na() |>
+  pivot_longer(cols = -Year, names_to='fuel_type', values_to='emissions')
+
+write.csv(co2, './data_source/co2_emissions_by_fuel_type.csv')
+
+ggplot(co2, aes(x=Year, y=emissions, color=fuel_type)) +
+  geom_line(size=1) + 
+  scale_color_brewer(palette = 'Set1') + 
+  labs(
+    title = 'CO2 Emissions By Fuel Type',
+    caption = 'Data Source: U.S. Energy Information Associaton',
+    x = 'Year',
+    y = 'CO2 Emissions (Million Metric Tons)'
+  ) + 
+  theme(
+    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    legend.position = 'bottom',
+    legend.box = 'horizontal',
+    legend.title = element_blank()
+  )
+```
+
+This graph shows CO2 emissions trends by different fuel types from approximately 1975 to 2020, measured in million metric tons. Several notable patterns emerge:
+
+**Petroleum** consistently remains the highest emitter throughout the period, showing significant fluctuations with peaks around 1980 and 2005-2010, followed by a notable decline and slight recovery toward 2020.
+
+**Coal** emissions (shown in blue) demonstrate a steady increase from 1975 until around 2005, after which they experience a dramatic decline, particularly steep after 2010. By 2020, coal emissions have dropped to their lowest levels in the recorded period.
+
+**Natural Gas** emissions (orange line) show a general upward trend, particularly accelerating after 2005. By the end of the period, natural gas emissions have surpassed coal, becoming the second-largest source of CO2 emissions.
+
+**Motor Gasoline** (purple line) maintains relatively stable emissions throughout the period, with a slight increase during the 1990s and 2000s, followed by a modest decline.
+
+**Other** sources (yellow line) and **Aviation/Kerosene** (red and green lines) contribute relatively minor amounts to overall emissions, remaining fairly constant throughout the period.
+
+**Key Transitions**: The most significant change in the data is the dramatic shift in the energy landscape after 2010, marked by:  
+- A sharp decline in coal emissions.  
+- A concurrent rise in natural gas emissions.  
+- A moderate decrease in petroleum emissions.  
+
+This pattern suggests a substantial transition in energy sources, particularly the shift from coal to natural gas in many applications.

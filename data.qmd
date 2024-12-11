@@ -1307,3 +1307,7 @@ combined_data <- Reduce(function(x, y) merge(x, y, by='Year', all=TRUE), data_li
 
 write_xlsx(combined_data, path='./data_source/combined_annual_data.xlsx')
 ```
+
+```{r}
+
+```
