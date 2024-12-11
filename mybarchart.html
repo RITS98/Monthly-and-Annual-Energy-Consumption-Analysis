@@ -23,7 +23,7 @@
       font-size: 12px;
     }
     
-    #slider .noUi-target {
+    #slider1 .noUi-target {
     border: none;
     box-shadow: none;
     background: #e9ecef;
@@ -31,12 +31,12 @@
     margin-top: -20px; /* Reduce gap between chart and slider */
     }
     
-    #slider .noUi-connect {
+    #slider1 .noUi-connect {
         background: #007BFF;
         height: 16px;
     }
     
-    #slider .noUi-handle {
+    #slider1 .noUi-handle {
         width: 30px;
         height: 29px;
         border-radius: 100%;
@@ -48,8 +48,38 @@
     }
     
     /* Remove default handle styling */
-    #slider .noUi-handle::before,
-    #slider .noUi-handle::after {
+    #slider1 .noUi-handle::before,
+    #slider1 .noUi-handle::after {
+        display: none;
+    }
+    
+    #slider2 .noUi-target {
+    border: none;
+    box-shadow: none;
+    background: #e9ecef;
+    height: 8px;
+    margin-top: -20px; /* Reduce gap between chart and slider */
+    }
+    
+    #slider2 .noUi-connect {
+        background: #007BFF;
+        height: 16px;
+    }
+    
+    #slider2 .noUi-handle {
+        width: 30px;
+        height: 29px;
+        border-radius: 100%;
+        background: #007BFF;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+        right: -8px; /* Center the handle */
+    }
+    
+    /* Remove default handle styling */
+    #slider2 .noUi-handle::before,
+    #slider2 .noUi-handle::after {
         display: none;
     }
     
@@ -67,13 +97,22 @@
   </style>
 </head>
 <body>
-  <h1>CO2 Emissions</h1>
-  <label for="sourceDropdown">Select Source:</label>
-  <select id="sourceDropdown"></select>
+  <h2 style="text-align: center;">Primary Energy Production</h2>
+  <label for="sourceDropdown2">Select Source:</label>
+  <select id="sourceDropdown2"></select>
   <br><br>
-  <div id="chart"></div>
-  <div id="slider"></div>
-  <p>Selected Year Range: <span id="yearRange">1973 - 2023</span></p>
+  <div id="chart2"></div>
+  <div id="slider2"></div>
+
+  <br>
+  <br>
+  <h2 style="text-align: center;">CO<sub>2</sub> Emissions</h2>
+  <label for="sourceDropdown1">Select Source:</label>
+  <select id="sourceDropdown1"></select>
+  <br>
+  <br>
+  <div id="chart1"></div>
+  <div id="slider1"></div>
   
   <script src="./scripts/myscript.js">
     

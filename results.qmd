@@ -73,7 +73,7 @@ ggplot(energy_data_annual, aes(x=Year)) +
     caption = 'Data Source: U.S. Energy Information Association',
   ) + 
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -110,7 +110,7 @@ ggplot(energy_data_annual, aes(x=Year)) +
     )
   ) +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -123,7 +123,7 @@ ggplot(energy_data_annual, aes(x=Year)) +
 
 **Renewable Energy Consumption** : This energy consumption begins to rise noticeably in the late 1990s. It shows a steady increase, especially post-2000, and appears to be catching up with nuclear power by the end of the period.
 
-The fossil fuels make a large chunk of energy consumption throughout the years. The other energy consumption source like nuclear and renewable has very little contribution. There is a serious need of investments in these energy sources in order to catch up or reduce the dependence of fossil fuels.
+The fossil fuels make a large chunk of energy consumption throughout the years. The other energy consumption source like nuclear and renewable has very little contribution. **There is a serious need of investments in these energy sources in order to catch up or reduce the dependence of fossil fuels.**
 
 ### Primary Energy Imports and Exports
 
@@ -137,7 +137,7 @@ ggplot(energy_data_annual, aes(x=Year, y=`Primary Energy Net Imports (Quadrillio
     caption = 'Data Source: U.S. Energy Information Associaton'
   ) + 
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
   )
 ```
 
@@ -151,7 +151,7 @@ The chart shows the net imports of primary energy into the United States over ti
 
 -   1980s to Early 2000s: A significant rise in net imports occurred, peaking around the mid-2000s. This reflects increased energy consumption and reliance on foreign energy sources. The U.S. experienced growing energy demands driven by economic expansion and technological advancements. This led to higher consumption of oil and natural gas. The U.S. became increasingly reliant on foreign oil, with imports rising significantly.
 
--   Mid-2000s to Present: There is a sharp decline in net imports, eventually turning negative. This indicates that the U.S. became a net exporter of primary energy. Factors contributing to this include increased domestic energy production (especially from shale gas and oil), improved energy efficiency, and shifts towards renewable energy sources. (Source: [U.S. Energy Independence](https://en.wikipedia.org/wiki/United_States_energy_independence))
+-   Mid-2000s to Present: There is a sharp decline in net imports, eventually turning negative. This indicates that the U.S. became a net exporter of primary energy. Factors contributing to this include increased domestic energy production (especially from gas and oil), improved energy efficiency, and shifts towards renewable energy sources. (Source: [U.S. Energy Independence](https://en.wikipedia.org/wiki/United_States_energy_independence))
 
 Overall, the chart illustrates a transition from high dependency on imported energy to a position where the U.S. exports more energy than it imports.
 
@@ -168,7 +168,7 @@ ggplot(energy_data_monthly, aes(x=Month)) +
     caption = 'Data Source: U.S. Energy Information Association'
   ) +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -188,14 +188,14 @@ ggplot(energy_data_annual, aes(x = `Primary Energy Imports (Quadrillion Btu)`, y
     caption = 'Data Source: U.S. Energy Information Association'
   ) +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     plot.subtitle =  element_text(hjust=0.5, color='purple')
   )
 ```
 The two graphs provide a comprehensive analysis of energy consumption and import patterns over time and it reveals important trends and relationships.
 
 **Consumption Trends**  
-Total Primary Energy Consumption shows a steady upward trajectory from around 5 Quadrillion Btu to approximately 7.5 Quadrillion Btu each month starting from January 1973 and ending on August 2024. Notable seasonal fluctuations appear throughout the timeline with regular peaks and troughs. The overall consumption pattern demonstrates consistent growth despite short-term variations
+Total Primary Energy Consumption shows a steady upward trajectory from around 6.5 Quadrillion Btu to approximately 7.5 Quadrillion Btu each month starting from January 1973 and ending on August 2024. Notable seasonal fluctuations appear throughout the timeline with regular peaks and troughs. The overall consumption pattern demonstrates consistent growth despite short-term variations
 
 **Import Patterns**  
 Primary Energy Imports started at roughly 1.5 Quadrillion Btu each month in the 1970s. Imports peaked around 2005-2010 at approximately 3 Quadrillion Btu each month. A notable decline in imports occurred after 2010, stabilizing at about 2 Quadrillion Btu each month by 2020.
@@ -204,8 +204,8 @@ Primary Energy Imports started at roughly 1.5 Quadrillion Btu each month in the 
 The scatter plot reveals a strong positive correlation between imports and consumption. The Pearson Correlation Coefficient of 0.95 indicates an extremely strong linear relationship between consumption and import. The narrow confidence interval (gray shading) suggests high prediction reliability. The regression line shows a clear positive slope, indicating that higher imports generally correspond to higher consumption. Data points cluster tightly around the regression line, particularly in the middle range. The relationship remains consistent across different levels of imports and consumption.
 
 **Key Insights**  
-- Despite growing total energy consumption, there's a decreasing reliance on imports in recent years.  
-- The gap between consumption and imports has widened over time, suggesting increased domestic energy production or diversification of energy sources.  
+- Despite growing total energy consumption, there's a decreasing reliance on imports in recent years.    
+- The gap between consumption and imports has widened over time, suggesting increased domestic energy production or diversification of energy sources.    
 - The seasonal variations in consumption are more pronounced than fluctuations in imports, indicating stable import patterns despite varying demand.  
 
 
@@ -238,7 +238,7 @@ ggplot(fossil_fuel, aes(x=`Year`, y=`Production (Quadrillion Btu)`, fill=`Energy
     caption = 'Data Source: U.S. Energy Information Association'
   ) +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -247,10 +247,8 @@ ggplot(fossil_fuel, aes(x=`Year`, y=`Production (Quadrillion Btu)`, fill=`Energy
 ```
 This chart shows how much fossil fuel was produced from around 1949 to 2023, measured in Quadrillion Btu (British thermal units). The chart uses a stacked area format, meaning each colored section is stacked on top of the others, making it easy to see both individual contributions and the total combined production at any point in time.
 
-Let us break down what we can see:
-
 **Coal (Red)**
-- The red bars at the top show coal production. It stayed fairly steady from 1949 to 1980, then increased after 1980 but eventually decreased around late 2010s and the trend continues till now.
+- The red bars at the top show coal production. It stayed fairly steady increase from 1949 to 1980, then nearly stabilized after 1980 but eventually decreased around late 2010s and the trend continues till now.
 
 **Crude Oil (Green)**
 - The green section represents crude oil production. It grew steadily from 1950 to 1980, remained relatively flat for many years, and then showed another strong increase from around 2010 to 2020.
@@ -261,7 +259,9 @@ Let us break down what we can see:
 **Natural Gas Plant Liquids (Purple)**
 - The purple section at the bottom represents natural gas plant liquids production. This has remained the smallest portion throughout the entire period, showing only modest growth.
 
-The total fossil fuel production has grown dramatically from about 28 quadrillion Btu in 1949 to nearly 85 quadrillion Btu by 2023. The most dramatic growth happened in the last decade shown on the chart (2010-2020), where all types of fossil fuels, except natural gas plant liquids, showed significant increases in production.
+The total fossil fuel production has grown dramatically from about 28 quadrillion Btu in 1949 to nearly 85 quadrillion Btu by 2023. The most dramatic growth happened in the last decade shown on the chart (2010-2020), where all types of fossil fuels, except natural gas plant liquids, showed significant increases in production. 
+
+The dependency on fossil fuels especially on natural gas is very pronounced in U.S. 
 
 ```{r}
 fossil_fuel_2023 <- fossil_fuel |> filter(Year==2023)
@@ -278,7 +278,7 @@ ggplot(fossil_fuel_2023, aes(x='', y=`Production (Quadrillion Btu)`, fill=`Energ
   ) + 
   theme_minimal() +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.title = element_blank(),
     axis.text = element_blank(),
     panel.grid = element_blank()
@@ -333,7 +333,7 @@ ggplot(renewable_energy, aes(x=`Year`, y=`Production (Quadrillion Btu)`, fill=`E
   ) +
   scale_fill_brewer(palette = "Set1") +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -363,7 +363,7 @@ The total renewable energy production has significantly increased over time, rea
 
 **Solar Energy (Purple)**  
 -   Begins to appear noticeably after 2010.  
--   Shows rapid recent growth.  
+-   Shows rapid recent growth due advancement in technology and good adoption by the government and people.  
 -   Still represents a smaller portion compared to other sources.  
 
 **Geothermal Energy (Blue)**  
@@ -375,7 +375,7 @@ The chart can be divided into 3 time periods as shown below.
 -   1980-2000: Modest growth with similar source distribution.  
 -   2000-2020: Rapid expansion with diversification into wind and solar energy.  
 
-The visualization clearly demonstrates the transition toward a more diverse renewable energy portfolio, with newer technologies like wind and solar becoming increasingly important contributors to the overall energy mix.
+The visualization clearly demonstrates the transition toward a more diverse renewable energy portfolio, with newer technologies like wind and solar becoming increasingly important contributors to the overall energy mix. But the difference between fossil fuels and renewable is very wide. Serious policy change and incentives are required to make the transition to renewable energy. 
 
 ```{r}
 renewable_energy_2023 <- renewable_energy |> filter(`Year` == 2023)
@@ -393,7 +393,7 @@ ggplot(renewable_energy_2023, aes(x='', y=`Production (Quadrillion Btu)`, fill=`
   theme_minimal() +
   scale_fill_brewer(palette = "Set1") +
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.title = element_blank(),
     axis.text = element_blank(),
     panel.grid = element_blank()
@@ -408,6 +408,12 @@ ggplot(renewable_energy_2023, aes(x='', y=`Production (Quadrillion Btu)`, fill=`
 
 The pie chart shows the breakdown of renewable energy production in the United States for 2023. Biomass energy is the dominant source and produces more than half of all renewable energy, accounting for 61.2% of total renewable energy production. Wind energy follows as the second-largest contributor at 17.0%, while solar energy represents 10.4% of the total. Hydroelectric power makes up 9.9%, and geothermal energy has the smallest share at 1.4%.
 
+Supporting renewable energy and reducing reliance on fossil fuels can be achieved by:
+	1.	**Investing in Clean Technologies**: Allocate funding for solar, wind, hydroelectric, and other renewable energy projects.  
+	2.	**Government Policies and Incentives**: Implement subsidies, tax credits, and carbon pricing to encourage renewable energy adoption.  
+	3.	**Grid Modernization**: Upgrade infrastructure to support energy storage and integrate decentralized renewable sources.  
+	4.	**Promoting Energy Efficiency**: Encourage the use of energy-efficient appliances and buildings to reduce overall demand.  
+	5.	**Public Awareness**: Educate communities about the benefits of renewables and sustainable practices to drive grassroots support.  
 
 ### Trends in Primary Energy Production
 ```{r, fig.width=8}
@@ -439,7 +445,7 @@ ggplot(primary_energy, aes(x = Year, y = `Production (Quadrillion Btu)`, fill = 
     caption = 'Data Source: U.S. Energy Information Association'
   ) + 
   theme(
-    plot.title = element_text(face='bold', hjust=0.5, color='darkblue'),
+    plot.title = element_text(face='bold', hjust=0.5, color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
@@ -474,7 +480,7 @@ dygraph(cbind(rs_energy_consumed, rs_energy_loss), main='Energy Consumed vs Ener
   dyAxis("y", label = "Energy (Trillion Btu)")
 ```
 
-The green line represents energy consumption, which follows a distinct seasonal pattern. Energy use regularly peaks at around 3,500 trillion BTU and drops to about 2,000 trillion BTU throughout each year. These peaks likely correspond to winter months when heating demands are highest, while valleys represent periods of lower energy usage, typically during milder seasons.
+The green line represents energy consumption, which follows a distinct seasonal pattern. Energy use regularly peaks at around 3,500 trillion BTU and drops to about 2,000 trillion BTU throughout each year. These peaks correspond to winter months when heating demands are highest, while valleys represent periods of lower energy usage, typically during milder seasons.
 
 The blue line shows energy loss, which mirrors the consumption pattern but at a significantly lower level. Energy losses typically fluctuate between 500 and 1,000 trillion BTU. This parallel pattern suggests that energy losses are directly proportional to consumption – when more energy is consumed, more is lost through various inefficiencies.
 
@@ -529,7 +535,7 @@ The relationship between energy consumed and lost has remained relatively stable
 
 The graph reveals that while industrial energy use has fluctuated over time, the efficiency of energy use (shown by the relatively stable loss rate) hasn’t changed dramatically over this period.  The graph also shows much less seasonal variations as compared to energy graph of residential and commercial sectors.
 
-
+There are certain dips in the graph like in 1980s, 2008 and 2020. This corresponding to major shifts in industrial sectors due to global crisis like financial crisis of 2008, covid pandemic, etc.
 
 ### Energy Overview by Transportation Sector
 ```{r}
@@ -588,16 +594,15 @@ ggplot(data = (statewise)) +
   labs(
     title = "Energy Production % by US Mainland, Alaska, and Hawaii") +
   theme(
-    plot.title = element_text(face='bold', hjust=0.5, color='darkblue'),
+    plot.title = element_text(face='bold', hjust=0.5, color='black'),
   )
 ```
-This choropleth map displays the percentage distribution of energy production across the United States, including Alaska and Hawaii. The color gradient ranges from light pink (lowest percentage) to dark red (highest percentage), with values ranging from 0% to 25%.
+This map displays the percentage distribution of energy production across the United States, including Alaska and Hawaii. The color gradient ranges from light orange (lowest percentage) to dark red (highest percentage), with values ranging from 0% to 25% as of 2022.
 
 Texas stands out prominently in dark red, contributing approximately 25% of the nation’s total energy production. The map reveals a concentration of energy production in the central United States, particularly in the South-Central region. Most coastal states and the Northeast show relatively lower energy production percentages, as indicated by their lighter shading.
 
-- The Western states generally show minimal energy production.  
+- The Western and eastern states show minimal energy production.  
 - Alaska and Hawaii, shown separately from the mainland, display low production levels.  
-- The Midwest and Eastern seaboard states contribute relatively small percentages to the national total.  
 
 The visualization effectively demonstrates the dominance of Texas in U.S. energy production while highlighting the significant regional disparities in energy production across the country.
 
@@ -614,24 +619,19 @@ ggplot(data = (statewise)) +
   labs(
     title = "Energy Expenditure per Capita in US Mainland, Alaska, and Hawaii") +
   theme(
-    plot.title = element_text(face='bold', hjust=0.5, color='darkblue'),
+    plot.title = element_text(face='bold', hjust=0.5, color='black'),
   )
 ```
-This map visualization shows the energy expenditure per capita across the United States, including Alaska and Hawaii. The data is represented through a color gradient, where darker teal/green indicates higher expenditure and lighter beige/brown shows lower expenditure.
+This map visualization shows the energy expenditure per capita across the United States, including Alaska and Hawaii. The data is represented through a color gradient, where darker blue indicates higher expenditure and lighter blue shows lower expenditure.
 
-Regional Patterns
-Alaska stands out with the highest energy expenditure per capita, shown in deep teal color, suggesting spending of more than $12,000 per person.
+Alaska stands out with the highest energy expenditure per capita, shown in deep teal color, suggesting spending of more than $12,000 per person. This is due to very low population.
 
-Mainland US shows varying levels of expenditure:  
-- The Western states generally show higher per capita spending, particularly in darker brown shades.  
-- The Midwest displays moderate expenditure levels in lighter brown tones.  
-- Several Northern states, particularly in the Mountain region, show spots of light blue, indicating different spending patterns.  
-- The Southeast region demonstrates moderate to high expenditure levels.  
+Several states in the northern central region (including North Dakota and Wyoming) show moderately high energy expenditure, indicated by medium-dark blue shading.
 
-The expenditure scale ranges from approximately:  
-- Highest (teal): > $12,000.  
-- Mid-range (tan): $6,000-8,000.  
-- Lower range (light beige): $4,000.  
+Texas and Louisiana in the South also display elevated energy expenditure levels compared to surrounding states
+
+Coastal and most inland states show lighter blue shading, indicating lower per capita energy expenditure
+
 This visualization effectively highlights the geographic disparities in energy spending across the United States, with notable variations between regions and individual states.
 
 
@@ -657,6 +657,20 @@ co2 <- energy_data_annual |> select(
 ) |> drop_na() |>
   pivot_longer(cols = -Year, names_to='fuel_type', values_to='emissions')
 
+pe_prod <- energy_data_annual |> select(
+  Year,
+  `Total Fossil Fuels Production (Quadrillion Btu)`,
+  `Nuclear Electric Power Production (Quadrillion Btu)`,
+  `Total Renewable Energy Production (Quadrillion Btu)`
+) |> rename(
+  fossil_fuel = `Total Fossil Fuels Production (Quadrillion Btu)`,
+  nuclear_energy = `Nuclear Electric Power Production (Quadrillion Btu)`,
+  renewable_energy = `Total Renewable Energy Production (Quadrillion Btu)`
+) |> drop_na() |>
+  pivot_longer(
+    cols = -Year, names_to = 'energy_type', values_to='production'
+  )
+write.csv(pe_prod, './data_source/pe_production.csv')
 write.csv(co2, './data_source/co2_emissions_by_fuel_type.csv')
 
 ggplot(co2, aes(x=Year, y=emissions, color=fuel_type)) +
@@ -669,14 +683,14 @@ ggplot(co2, aes(x=Year, y=emissions, color=fuel_type)) +
     y = 'CO2 Emissions (Million Metric Tons)'
   ) + 
   theme(
-    plot.title = element_text(hjust=0.5, face='bold', color='darkblue'),
+    plot.title = element_text(hjust=0.5, face='bold', color='black'),
     legend.position = 'bottom',
     legend.box = 'horizontal',
     legend.title = element_blank()
   )
 ```
 
-This graph shows CO2 emissions trends by different fuel types from approximately 1975 to 2020, measured in million metric tons. Several notable patterns emerge:
+This graph shows CO2 emissions trends by different fuel types from approximately 1973 to 2023, measured in million metric tons. Several notable patterns emerge:
 
 **Petroleum** consistently remains the highest emitter throughout the period, showing significant fluctuations with peaks around 1980 and 2005-2010, followed by a notable decline and slight recovery toward 2020.
 
@@ -693,4 +707,10 @@ This graph shows CO2 emissions trends by different fuel types from approximately
 - A concurrent rise in natural gas emissions.  
 - A moderate decrease in petroleum emissions.  
 
-This pattern suggests a substantial transition in energy sources, particularly the shift from coal to natural gas in many applications.
+The overall emission patterns have significant implications for climate change:  
+- The shift from coal to natural gas represents a partial improvement, as natural gas produces about half the CO2 emissions per unit of energy compared to coal.  
+- Despite the decline in coal usage, the total emissions remain high enough to contribute significantly to global warming.  
+- The persistent high levels of petroleum emissions, combined with rising natural gas usage, continue to pose challenges for meeting climate goals. 
+
+
+This comprehensive emissions profile suggests that while there have been some positive changes in the energy mix, particularly the reduction in coal usage, the United States continues to produce substantial CO2 emissions that contribute to global climate change. Further reductions across all fuel types would be necessary to meaningfully address climate change concerns.
