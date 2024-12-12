@@ -138,6 +138,11 @@ the y-axis scale when selecting different types of energy.</p>
 ::: {#slider2}
 :::
 
+<p>Notice that nuclear sources have been increasing in the past 30 to 40
+years, and renewable source has been given more attention in the recent
+decades. Yet, we see that fossil fuels are still the main source of
+energy and are still rising in production.</p>
+
 <br> <br>
 
 <h2 style="text-align: center;">
@@ -165,6 +170,11 @@ scale when selecting different types of emission sources.</p>
     
 </script>
 ```
+<p>Notice that the carbon dioxide emission due to coal, one of the major
+source of emission, has been decreasing in the past 2 decades, while
+emission due to other major source, petroleum, gasoline, and natural
+gas, has experienced limited control, if not rising.</p>
+
 </body>
 
 </html>
