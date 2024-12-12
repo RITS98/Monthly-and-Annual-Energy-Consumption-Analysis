@@ -1,13 +1,31 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Interactive graph
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CO2 Emissions Bar Chart</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.js"></script>
-  <style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CO2 Emissions Bar Chart</title>
+
+```{=html}
+<script src="https://d3js.org/d3.v7.min.js"></script>
+```
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.css">
+
+```{=html}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.2/nouislider.min.js"></script>
+```
+```{=html}
+<style>
     .chart {
       display: flex;
       align-items: center;
@@ -95,28 +113,58 @@
    
 
   </style>
+```
 </head>
-<body>
-  <h2 style="text-align: center;">Primary Energy Production</h2>
-  <label for="sourceDropdown2">Select Source:</label>
-  <select id="sourceDropdown2"></select>
-  <br><br>
-  <div id="chart2"></div>
-  <div id="slider2"></div>
 
-  <br>
-  <br>
-  <h2 style="text-align: center;">CO<sub>2</sub> Emissions</h2>
-  <label for="sourceDropdown1">Select Source:</label>
-  <select id="sourceDropdown1"></select>
-  <br>
-  <br>
-  <div id="chart1"></div>
-  <div id="slider1"></div>
-  
-  <script src="./scripts/myscript.js">
+<body>
+
+<h2 style="text-align: center;">
+
+Primary Energy Production
+
+</h2>
+
+<p>Select the type of energy (fossil, nuclear, or renewable)you are
+interested from the dropdown menu. You can scroll the slider to check
+for any period of time within the year 1949 to 2023. Pay attention to
+the y-axis scale when selecting different types of energy.</p>
+
+<label for="sourceDropdown2">Select Source:</label>
+<select id="sourceDropdown2"></select> <br><br>
+
+::: {#chart2}
+:::
+
+::: {#slider2}
+:::
+
+<br> <br>
+
+<h2 style="text-align: center;">
+
+CO<sub>2</sub> Emissions
+
+</h2>
+
+<p>Select the type of carbon dioxide emission sources you are interested
+from the dropdown menu. You can scroll the slider to check for any
+period of time within the year 1973 to 2023. Pay attention to the y-axis
+scale when selecting different types of emission sources.</p>
+
+<label for="sourceDropdown1">Select Source:</label>
+<select id="sourceDropdown1"></select> <br> <br>
+
+::: {#chart1}
+:::
+
+::: {#slider1}
+:::
+
+```{=html}
+<script src="./scripts/myscript.js">
     
 </script>
+```
 </body>
-</html>
 
+</html>
