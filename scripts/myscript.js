@@ -1,7 +1,7 @@
 // Common dimensions
 const margin = { top: 20, right: 30, bottom: 50, left: 80 };
-const width = 1000 - margin.left - margin.right;
-const height = 450 - margin.top - margin.bottom;
+const width = 750 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
 
 // Chart 1: CO2 Emissions by Fuel Type
 const svg1 = d3.select("div#chart1")
